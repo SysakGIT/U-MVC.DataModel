@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RabbitClubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="ClubID" />
+          </Key>
+          <Property Name="ClubID" Type="int" Nullable="false" />
+          <Property Name="ClubName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ClubNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClubHeadID" Type="int" />
+          <Property Name="City" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="PostBox" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar(max)" />
+          <Property Name="MemberNumber" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MembersPhone">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" />
+          <Property Name="PhoneTypeID" Type="int" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PhoneTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="PhoneType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rabbits">
+          <Key>
+            <PropertyRef Name="RabbitId" />
+          </Key>
+          <Property Name="RabbitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RabbitBreedId" Type="int" Nullable="false" />
+          <Property Name="MemberId" Type="int" Nullable="false" />
+          <Property Name="RabbitBirthDay" Type="datetime" Nullable="false" />
+          <Property Name="RabbitGender" Type="nvarchar(max)" />
+          <Property Name="RabbitColor" Type="nvarchar(max)" />
+          <Property Name="Weight" Type="real" Nullable="false" />
+          <Property Name="Ears" Type="real" Nullable="false" />
+          <Property Name="PhotoAlbumId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="RegionNam" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="StreetName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="200" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <Association Name="fk_Club_ClubHeadID">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="Club" Type="Self.Club" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Club">
+              <PropertyRef Name="ClubHeadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_MembersPhone_MemberID">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="MembersPhone" Type="Self.MembersPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="MembersPhone">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_MembersPhone_PhoneTypeID">
+          <End Role="PhoneTypes" Type="Self.PhoneTypes" Multiplicity="0..1" />
+          <End Role="MembersPhone" Type="Self.MembersPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MembersPhone">
+              <PropertyRef Name="PhoneTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RabbitClubModelStoreContainer">
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Club" EntityType="Self.Club" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembersPhone" EntityType="Self.MembersPhone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhoneTypes" EntityType="Self.PhoneTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rabbits" EntityType="Self.Rabbits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Club_ClubHeadID" Association="Self.fk_Club_ClubHeadID">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Club" EntitySet="Club" />
+          </AssociationSet>
+          <AssociationSet Name="fk_MembersPhone_MemberID" Association="Self.fk_MembersPhone_MemberID">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MembersPhone" EntitySet="MembersPhone" />
+          </AssociationSet>
+          <AssociationSet Name="fk_MembersPhone_PhoneTypeID" Association="Self.fk_MembersPhone_PhoneTypeID">
+            <End Role="PhoneTypes" EntitySet="PhoneTypes" />
+            <End Role="MembersPhone" EntitySet="MembersPhone" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RabbitClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RabbitClubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="City" EntityType="RabbitClubModel.City" />
+          <EntitySet Name="Club" EntityType="RabbitClubModel.Club" />
+          <EntitySet Name="District" EntityType="RabbitClubModel.District" />
+          <EntitySet Name="Members" EntityType="RabbitClubModel.Members" />
+          <EntitySet Name="MembersPhone" EntityType="RabbitClubModel.MembersPhone" />
+          <EntitySet Name="PhoneTypes" EntityType="RabbitClubModel.PhoneTypes" />
+          <EntitySet Name="Rabbits" EntityType="RabbitClubModel.Rabbits" />
+          <EntitySet Name="Region" EntityType="RabbitClubModel.Region" />
+          <EntitySet Name="Street" EntityType="RabbitClubModel.Street" />
+          <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
+          <AssociationSet Name="fk_Club_ClubHeadID" Association="RabbitClubModel.fk_Club_ClubHeadID">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Club" EntitySet="Club" />
+          </AssociationSet>
+          <AssociationSet Name="fk_MembersPhone_MemberID" Association="RabbitClubModel.fk_MembersPhone_MemberID">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MembersPhone" EntitySet="MembersPhone" />
+          </AssociationSet>
+          <AssociationSet Name="fk_MembersPhone_PhoneTypeID" Association="RabbitClubModel.fk_MembersPhone_PhoneTypeID">
+            <End Role="PhoneTypes" EntitySet="PhoneTypes" />
+            <End Role="MembersPhone" EntitySet="MembersPhone" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="ClubID" />
+          </Key>
+          <Property Name="ClubID" Type="Int32" Nullable="false" />
+          <Property Name="ClubName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ClubNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClubHeadID" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Members" Relationship="RabbitClubModel.fk_Club_ClubHeadID" FromRole="Club" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MemberNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Club" Relationship="RabbitClubModel.fk_Club_ClubHeadID" FromRole="Members" ToRole="Club" />
+          <NavigationProperty Name="MembersPhone" Relationship="RabbitClubModel.fk_MembersPhone_MemberID" FromRole="Members" ToRole="MembersPhone" />
+        </EntityType>
+        <EntityType Name="MembersPhone">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" />
+          <Property Name="PhoneTypeID" Type="Int32" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Members" Relationship="RabbitClubModel.fk_MembersPhone_MemberID" FromRole="MembersPhone" ToRole="Members" />
+          <NavigationProperty Name="PhoneTypes" Relationship="RabbitClubModel.fk_MembersPhone_PhoneTypeID" FromRole="MembersPhone" ToRole="PhoneTypes" />
+        </EntityType>
+        <EntityType Name="PhoneTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PhoneType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MembersPhone" Relationship="RabbitClubModel.fk_MembersPhone_PhoneTypeID" FromRole="PhoneTypes" ToRole="MembersPhone" />
+        </EntityType>
+        <EntityType Name="Rabbits">
+          <Key>
+            <PropertyRef Name="RabbitId" />
+          </Key>
+          <Property Name="RabbitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RabbitBreedId" Type="Int32" Nullable="false" />
+          <Property Name="MemberId" Type="Int32" Nullable="false" />
+          <Property Name="RabbitBirthDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RabbitGender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RabbitColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Single" Nullable="false" />
+          <Property Name="Ears" Type="Single" Nullable="false" />
+          <Property Name="PhotoAlbumId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RegionNam" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="StreetName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <Association Name="fk_Club_ClubHeadID">
+          <End Type="RabbitClubModel.Members" Role="Members" Multiplicity="0..1" />
+          <End Type="RabbitClubModel.Club" Role="Club" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Club">
+              <PropertyRef Name="ClubHeadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_MembersPhone_MemberID">
+          <End Type="RabbitClubModel.Members" Role="Members" Multiplicity="0..1" />
+          <End Type="RabbitClubModel.MembersPhone" Role="MembersPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="MembersPhone">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_MembersPhone_PhoneTypeID">
+          <End Type="RabbitClubModel.PhoneTypes" Role="PhoneTypes" Multiplicity="0..1" />
+          <End Type="RabbitClubModel.MembersPhone" Role="MembersPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MembersPhone">
+              <PropertyRef Name="PhoneTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RabbitClubModelStoreContainer" CdmEntityContainer="RabbitClubEntities">
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="RabbitClubModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Club">
+            <EntityTypeMapping TypeName="RabbitClubModel.Club">
+              <MappingFragment StoreEntitySet="Club">
+                <ScalarProperty Name="PostBox" ColumnName="PostBox" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ClubHeadID" ColumnName="ClubHeadID" />
+                <ScalarProperty Name="ClubNumber" ColumnName="ClubNumber" />
+                <ScalarProperty Name="ClubName" ColumnName="ClubName" />
+                <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="District">
+            <EntityTypeMapping TypeName="RabbitClubModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="RabbitClubModel.Members">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="MemberNumber" ColumnName="MemberNumber" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembersPhone">
+            <EntityTypeMapping TypeName="RabbitClubModel.MembersPhone">
+              <MappingFragment StoreEntitySet="MembersPhone">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneTypeID" ColumnName="PhoneTypeID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhoneTypes">
+            <EntityTypeMapping TypeName="RabbitClubModel.PhoneTypes">
+              <MappingFragment StoreEntitySet="PhoneTypes">
+                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rabbits">
+            <EntityTypeMapping TypeName="RabbitClubModel.Rabbits">
+              <MappingFragment StoreEntitySet="Rabbits">
+                <ScalarProperty Name="PhotoAlbumId" ColumnName="PhotoAlbumId" />
+                <ScalarProperty Name="Ears" ColumnName="Ears" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="RabbitColor" ColumnName="RabbitColor" />
+                <ScalarProperty Name="RabbitGender" ColumnName="RabbitGender" />
+                <ScalarProperty Name="RabbitBirthDay" ColumnName="RabbitBirthDay" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="RabbitBreedId" ColumnName="RabbitBreedId" />
+                <ScalarProperty Name="RabbitId" ColumnName="RabbitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="RabbitClubModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="RegionNam" ColumnName="RegionNam" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Street">
+            <EntityTypeMapping TypeName="RabbitClubModel.Street">
+              <MappingFragment StoreEntitySet="Street">
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RabbitClubModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

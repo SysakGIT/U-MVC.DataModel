@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@section administartionMenu
+{
+    I am a RenderSectionArea.
+@Html.ActionLink("Члени клубу", "AddMembers", "Configure")
+
+@Html.ActionLink("Метрика кролів", "AddRabits", "Configure")
+}

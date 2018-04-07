@@ -1,0 +1,41 @@
+﻿@using U7MVC.Models
+@model Member
+@{
+    //Layout = null;
+}
+<div class="row">
+    <div class="col-md-8">
+        <section id="addNewMember">
+            @using (Html.BeginForm("AddMembers", "Configure", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.MemberId)
+               
+                <h4>Додати нового Члена Клубу.</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    Прізвище
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.MemberName, new { @class = "form-control" })
+               
+                    </div>
+                </div>
+                <div class="form-group">
+                    Номер в клубі
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.MemberNumber, new { @class = "form-control" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+
+            }
+        </section>
+    </div>
+    
+</div>

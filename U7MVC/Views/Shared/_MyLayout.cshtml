@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<!-- Template by quackit.com -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/MyStyleSheet.css")
+
+
+    <script type="text/javascript">
+			/* =============================
+			This script generates sample text for the body content.
+			You can remove this script and any reference to it.
+			 ============================= */
+			var bodyText=["Remember, you are unique, just like everybody else.", "Too much agreement kills a good chat.", "Get your facts first, then you can distort them as you please.", "I intend to live forever. So far, so good.", "</p><p>A clear conscience is usually a sign of a bad memory.", "What's another word for Thesaurus?", "<h3>Heading</h3><p>Experience is something you don't get until just after you need it."]
+			function generateText(sentenceCount){
+				for (var i=0; i<sentenceCount; i++)
+				document.write(bodyText[Math.floor(Math.random()*7)]+" ")
+			}
+    </script>
+
+</head>
+
+<body>
+
+    <header id="header11">
+        <div class="innertube11">
+            <div class="navbar">
+
+
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+
+
+                @Html.ActionLink("Головна", "Index", "Home")
+                @Html.ActionLink("Члени клубу", "Member", "Home")
+                @Html.ActionLink("Про клуб", "About", "Home")
+                @Html.ActionLink("Галерея", "About", "Home")
+                @Html.ActionLink("Contact", "Contact", "Home")
+
+
+                @Html.ActionLink("Адміністрування", "LeftMenuAdmin", "Configure")
+                <!--
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        Адміністрування
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        @Html.ActionLink("Члени клубу", "AddMembers", "Configure")
+                        @Html.ActionLink("Метрика кролів", "AddRabits", "Configure")
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+-->
+
+
+                @Html.Partial("_MyLoginPartial") 
+
+            </div>
+        </div>
+
+
+    </header>
+
+    <main>
+        <div class="innertube">
+            @RenderBody()
+
+            
+        </div>
+    </main>
+
+    <nav id="left">
+        <div class="innertube">
+            @RenderSection("administartionMenu", false)
+
+            <h1>Heading</h1>
+            <ul>
+                <li><a href="#">Link 1</a></li>
+                <li><a href="#">Link 2</a></li>
+                <li><a href="#">Link 3</a></li>
+                <li><a href="#">Link 4</a></li>
+                <li><a href="#">Link 5</a></li>
+            </ul>
+            <h1>Heading</h1>
+            <ul>
+                <li><a href="#">Link 1</a></li>
+                <li><a href="#">Link 2</a></li>
+                <li><a href="#">Link 3</a></li>
+                <li><a href="#">Link 4</a></li>
+                <li><a href="#">Link 5</a></li>
+            </ul>
+
+        </div>
+    </nav>
+    <div id="right">
+        <div class="innertube">
+            <p>
+                <script>generateText(2)</script>
+            </p>
+
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="innertube">
+            <p>Footer...</p>
+        </div>
+    </footer>
+
+</body>
+</html>

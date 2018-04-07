@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RabbitClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="RabbitClubEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="City" EntityType="RabbitClubModel.City" />
+    <EntitySet Name="Club" EntityType="RabbitClubModel.Club" />
+    <EntitySet Name="District" EntityType="RabbitClubModel.District" />
+    <EntitySet Name="Members" EntityType="RabbitClubModel.Members" />
+    <EntitySet Name="MembersPhone" EntityType="RabbitClubModel.MembersPhone" />
+    <EntitySet Name="PhoneTypes" EntityType="RabbitClubModel.PhoneTypes" />
+    <EntitySet Name="Rabbits" EntityType="RabbitClubModel.Rabbits" />
+    <EntitySet Name="Region" EntityType="RabbitClubModel.Region" />
+    <EntitySet Name="Street" EntityType="RabbitClubModel.Street" />
+    <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
+    <AssociationSet Name="fk_Club_ClubHeadID" Association="RabbitClubModel.fk_Club_ClubHeadID">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="Club" EntitySet="Club" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MembersPhone_MemberID" Association="RabbitClubModel.fk_MembersPhone_MemberID">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MembersPhone" EntitySet="MembersPhone" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MembersPhone_PhoneTypeID" Association="RabbitClubModel.fk_MembersPhone_PhoneTypeID">
+      <End Role="PhoneTypes" EntitySet="PhoneTypes" />
+      <End Role="MembersPhone" EntitySet="MembersPhone" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Club">
+    <Key>
+      <PropertyRef Name="ClubID" />
+    </Key>
+    <Property Name="ClubID" Type="Int32" Nullable="false" />
+    <Property Name="ClubName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ClubNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ClubHeadID" Type="Int32" />
+    <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Members" Relationship="RabbitClubModel.fk_Club_ClubHeadID" FromRole="Club" ToRole="Members" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Members">
+    <Key>
+      <PropertyRef Name="MemberId" />
+    </Key>
+    <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MemberNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Club" Relationship="RabbitClubModel.fk_Club_ClubHeadID" FromRole="Members" ToRole="Club" />
+    <NavigationProperty Name="MembersPhone" Relationship="RabbitClubModel.fk_MembersPhone_MemberID" FromRole="Members" ToRole="MembersPhone" />
+  </EntityType>
+  <EntityType Name="MembersPhone">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="MemberID" Type="Int32" />
+    <Property Name="PhoneTypeID" Type="Int32" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Members" Relationship="RabbitClubModel.fk_MembersPhone_MemberID" FromRole="MembersPhone" ToRole="Members" />
+    <NavigationProperty Name="PhoneTypes" Relationship="RabbitClubModel.fk_MembersPhone_PhoneTypeID" FromRole="MembersPhone" ToRole="PhoneTypes" />
+  </EntityType>
+  <EntityType Name="PhoneTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MembersPhone" Relationship="RabbitClubModel.fk_MembersPhone_PhoneTypeID" FromRole="PhoneTypes" ToRole="MembersPhone" />
+  </EntityType>
+  <EntityType Name="Rabbits">
+    <Key>
+      <PropertyRef Name="RabbitId" />
+    </Key>
+    <Property Name="RabbitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RabbitBreedId" Type="Int32" Nullable="false" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="RabbitBirthDay" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RabbitGender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RabbitColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Weight" Type="Single" Nullable="false" />
+    <Property Name="Ears" Type="Single" Nullable="false" />
+    <Property Name="PhotoAlbumId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="RegionNam" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="StreetName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" />
+  </EntityType>
+  <Association Name="fk_Club_ClubHeadID">
+    <End Type="RabbitClubModel.Members" Role="Members" Multiplicity="0..1" />
+    <End Type="RabbitClubModel.Club" Role="Club" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="MemberId" />
+      </Principal>
+      <Dependent Role="Club">
+        <PropertyRef Name="ClubHeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MembersPhone_MemberID">
+    <End Type="RabbitClubModel.Members" Role="Members" Multiplicity="0..1" />
+    <End Type="RabbitClubModel.MembersPhone" Role="MembersPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="MemberId" />
+      </Principal>
+      <Dependent Role="MembersPhone">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MembersPhone_PhoneTypeID">
+    <End Type="RabbitClubModel.PhoneTypes" Role="PhoneTypes" Multiplicity="0..1" />
+    <End Type="RabbitClubModel.MembersPhone" Role="MembersPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MembersPhone">
+        <PropertyRef Name="PhoneTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

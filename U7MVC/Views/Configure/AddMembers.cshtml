@@ -1,0 +1,31 @@
+﻿@using U7MVC.Models
+@model Member
+
+@{
+    ViewBag.Title = "AddMembers";
+    //Layout = "~/Views/_ViewStart.cshtml";
+}
+
+<h2>AddMembers</h2>
+
+<h2>Члени Ужгорожського клубу</h2>
+<div>
+    <table>
+        <tr>
+            <td><p>Прізвище, імя, по-батькові</p></td>
+            <td><p>Номер в клубі</p></td>
+        </tr>
+       
+        <tr>
+            @Html.ActionLink("Додати нового", "AddmemberForm", "Configure")
+        </tr>
+        
+        @foreach (var b in ViewBag.Members)
+        {
+            <tr>
+                <td><p>@b.MemberName</p></td>
+                <td><p>@b.MemberNumber</p></td>
+            </tr>
+        }
+    </table>
+</div>
