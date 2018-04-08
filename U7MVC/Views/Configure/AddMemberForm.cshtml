@@ -45,16 +45,17 @@
                 <div class="form-group">
                     Область
                     <div class="col-md-10">
+                        
                         <select id="mySelect">
                             
-                          <!--foreach (var b in ViewBag.RegionList)
-                {
-                              <option value ="b.ID">
-                                         b.DistricName
+                          @foreach (var b in ViewBag.Reg)
+                          {
+                              <option value ="@b.ID">
+                                         @b.RegionName
                               </option>
 
                           }
-                              -->
+                              
                         </select>
                     </div>
                 </div>
@@ -63,11 +64,13 @@
                     Район
                     <div class="col-md-10">
                         <select id="mySelect">
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
+                            @foreach (var b in ViewBag.District)
+                            {
+                                <option value="@b.DistrictId">
+                                    @b.DistrictName
+                                </option>
+
+                            }
                         </select>
                     </div>
                 </div>

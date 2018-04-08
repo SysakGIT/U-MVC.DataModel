@@ -17,6 +17,8 @@ namespace U7MVC.Models
         public DbSet<Region> RegionList { get; set; }
 
         public DbSet<District> DistrictList { get; set; }
+
+        public DbSet<RegionsDistrinct> RegionsDistrinctList { get; set; }
     }
   /*  public class RabbitDBInitializer : DropCreateDatabaseAlways<RabbitContext>
     {

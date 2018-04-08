@@ -28,11 +28,12 @@ namespace U7MVC.Controllers
         {
             var member = db.Members;
             ViewBag.Members = member;
-            var reg = db.RegionList;
+
+            IEnumerable<Region> reg = db.RegionList;
             ViewBag.Reg = reg;
 
-            /*var distr = db.DistrictList;
-            ViewBag.Distric = distr;*/
+            IEnumerable<RegionsDistrinct> distr = db.RegionsDistrinctList.Where(r =>r.RegionId == 1);
+            ViewBag.District = distr; 
             return View();
         }
 
