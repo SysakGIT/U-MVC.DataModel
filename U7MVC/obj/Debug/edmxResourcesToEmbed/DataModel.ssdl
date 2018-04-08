@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RabbitClubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AddressData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegionId" Type="int" Nullable="false" />
+    <Property Name="DistrictId" Type="int" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="StreetId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="City">
     <Key>
       <PropertyRef Name="ID" />
@@ -28,11 +38,14 @@
   </EntityType>
   <EntityType Name="Members">
     <Key>
-      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="MemberID" />
     </Key>
-    <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MemberName" Type="nvarchar(max)" />
-    <Property Name="MemberNumber" Type="nvarchar(max)" />
+    <Property Name="MemberID" Type="int" Nullable="false" />
+    <Property Name="MemberName" Type="nvarchar" MaxLength="200" />
+    <Property Name="MemberNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" />
+    <Property Name="PostBox" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="MembersPhone">
     <Key>
@@ -49,20 +62,6 @@
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="PhoneType" Type="nvarchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Rabbits">
-    <Key>
-      <PropertyRef Name="RabbitId" />
-    </Key>
-    <Property Name="RabbitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RabbitBreedId" Type="int" Nullable="false" />
-    <Property Name="MemberId" Type="int" Nullable="false" />
-    <Property Name="RabbitBirthDay" Type="datetime" Nullable="false" />
-    <Property Name="RabbitGender" Type="nvarchar(max)" />
-    <Property Name="RabbitColor" Type="nvarchar(max)" />
-    <Property Name="Weight" Type="real" Nullable="false" />
-    <Property Name="Ears" Type="real" Nullable="false" />
-    <Property Name="PhotoAlbumId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Region">
     <Key>
@@ -88,12 +87,60 @@
     <Property Name="UserPassword" Type="nvarchar" MaxLength="200" />
     <Property Name="isActive" Type="bit" />
   </EntityType>
+  <Association Name="fc_City_CityId">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_District_DistrictId">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_Region_RegionId">
+    <End Role="Region" Type="Self.Region" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_Street_StreetId">
+    <End Role="Street" Type="Self.Street" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="StreetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Club_ClubHeadID">
     <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
     <End Role="Club" Type="Self.Club" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Members">
-        <PropertyRef Name="MemberId" />
+        <PropertyRef Name="MemberID" />
       </Principal>
       <Dependent Role="Club">
         <PropertyRef Name="ClubHeadID" />
@@ -105,7 +152,7 @@
     <End Role="MembersPhone" Type="Self.MembersPhone" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Members">
-        <PropertyRef Name="MemberId" />
+        <PropertyRef Name="MemberID" />
       </Principal>
       <Dependent Role="MembersPhone">
         <PropertyRef Name="MemberID" />
@@ -125,16 +172,32 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="RabbitClubModelStoreContainer">
+    <EntitySet Name="AddressData" EntityType="Self.AddressData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Club" EntityType="Self.Club" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MembersPhone" EntityType="Self.MembersPhone" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PhoneTypes" EntityType="Self.PhoneTypes" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Rabbits" EntityType="Self.Rabbits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fc_City_CityId" Association="Self.fc_City_CityId">
+      <End Role="City" EntitySet="City" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_District_DistrictId" Association="Self.fc_District_DistrictId">
+      <End Role="District" EntitySet="District" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_Region_RegionId" Association="Self.fc_Region_RegionId">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_Street_StreetId" Association="Self.fc_Street_StreetId">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
     <AssociationSet Name="fk_Club_ClubHeadID" Association="Self.fk_Club_ClubHeadID">
       <End Role="Members" EntitySet="Members" />
       <End Role="Club" EntitySet="Club" />

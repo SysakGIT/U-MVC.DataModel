@@ -28,7 +28,11 @@ namespace U7MVC.Controllers
         {
             var member = db.Members;
             ViewBag.Members = member;
+            var reg = db.RegionList;
+            ViewBag.Reg = reg;
 
+            /*var distr = db.DistrictList;
+            ViewBag.Distric = distr;*/
             return View();
         }
 

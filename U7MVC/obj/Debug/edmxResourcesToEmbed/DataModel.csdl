@@ -1,16 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RabbitClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="RabbitClubEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AddressData" EntityType="RabbitClubModel.AddressData" />
     <EntitySet Name="City" EntityType="RabbitClubModel.City" />
     <EntitySet Name="Club" EntityType="RabbitClubModel.Club" />
     <EntitySet Name="District" EntityType="RabbitClubModel.District" />
     <EntitySet Name="Members" EntityType="RabbitClubModel.Members" />
     <EntitySet Name="MembersPhone" EntityType="RabbitClubModel.MembersPhone" />
     <EntitySet Name="PhoneTypes" EntityType="RabbitClubModel.PhoneTypes" />
-    <EntitySet Name="Rabbits" EntityType="RabbitClubModel.Rabbits" />
     <EntitySet Name="Region" EntityType="RabbitClubModel.Region" />
     <EntitySet Name="Street" EntityType="RabbitClubModel.Street" />
     <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
+    <AssociationSet Name="fc_City_CityId" Association="RabbitClubModel.fc_City_CityId">
+      <End Role="City" EntitySet="City" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_District_DistrictId" Association="RabbitClubModel.fc_District_DistrictId">
+      <End Role="District" EntitySet="District" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_Region_RegionId" Association="RabbitClubModel.fc_Region_RegionId">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_Street_StreetId" Association="RabbitClubModel.fc_Street_StreetId">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
     <AssociationSet Name="fk_Club_ClubHeadID" Association="RabbitClubModel.fk_Club_ClubHeadID">
       <End Role="Members" EntitySet="Members" />
       <End Role="Club" EntitySet="Club" />
@@ -24,12 +40,27 @@
       <End Role="MembersPhone" EntitySet="MembersPhone" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="AddressData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RegionId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="StreetId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="RabbitClubModel.fc_City_CityId" FromRole="AddressData" ToRole="City" />
+    <NavigationProperty Name="District" Relationship="RabbitClubModel.fc_District_DistrictId" FromRole="AddressData" ToRole="District" />
+    <NavigationProperty Name="Region" Relationship="RabbitClubModel.fc_Region_RegionId" FromRole="AddressData" ToRole="Region" />
+    <NavigationProperty Name="Street" Relationship="RabbitClubModel.fc_Street_StreetId" FromRole="AddressData" ToRole="Street" />
+  </EntityType>
   <EntityType Name="City">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="RabbitClubModel.fc_City_CityId" FromRole="City" ToRole="AddressData" />
   </EntityType>
   <EntityType Name="Club">
     <Key>
@@ -50,14 +81,18 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="RabbitClubModel.fc_District_DistrictId" FromRole="District" ToRole="AddressData" />
   </EntityType>
   <EntityType Name="Members">
     <Key>
-      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="MemberID" />
     </Key>
-    <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="MemberName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="MemberNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MemberID" Type="Int32" Nullable="false" />
+    <Property Name="MemberName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MemberNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Club" Relationship="RabbitClubModel.fk_Club_ClubHeadID" FromRole="Members" ToRole="Club" />
     <NavigationProperty Name="MembersPhone" Relationship="RabbitClubModel.fk_MembersPhone_MemberID" FromRole="Members" ToRole="MembersPhone" />
   </EntityType>
@@ -80,26 +115,13 @@
     <Property Name="PhoneType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="MembersPhone" Relationship="RabbitClubModel.fk_MembersPhone_PhoneTypeID" FromRole="PhoneTypes" ToRole="MembersPhone" />
   </EntityType>
-  <EntityType Name="Rabbits">
-    <Key>
-      <PropertyRef Name="RabbitId" />
-    </Key>
-    <Property Name="RabbitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RabbitBreedId" Type="Int32" Nullable="false" />
-    <Property Name="MemberId" Type="Int32" Nullable="false" />
-    <Property Name="RabbitBirthDay" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="RabbitGender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="RabbitColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Weight" Type="Single" Nullable="false" />
-    <Property Name="Ears" Type="Single" Nullable="false" />
-    <Property Name="PhotoAlbumId" Type="Int32" Nullable="false" />
-  </EntityType>
   <EntityType Name="Region">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="RegionNam" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="RabbitClubModel.fc_Region_RegionId" FromRole="Region" ToRole="AddressData" />
   </EntityType>
   <EntityType Name="Street">
     <Key>
@@ -107,6 +129,7 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="StreetName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="RabbitClubModel.fc_Street_StreetId" FromRole="Street" ToRole="AddressData" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -118,12 +141,60 @@
     <Property Name="UserPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" />
   </EntityType>
+  <Association Name="fc_City_CityId">
+    <End Type="RabbitClubModel.City" Role="City" Multiplicity="1" />
+    <End Type="RabbitClubModel.AddressData" Role="AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_District_DistrictId">
+    <End Type="RabbitClubModel.District" Role="District" Multiplicity="1" />
+    <End Type="RabbitClubModel.AddressData" Role="AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_Region_RegionId">
+    <End Type="RabbitClubModel.Region" Role="Region" Multiplicity="1" />
+    <End Type="RabbitClubModel.AddressData" Role="AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_Street_StreetId">
+    <End Type="RabbitClubModel.Street" Role="Street" Multiplicity="1" />
+    <End Type="RabbitClubModel.AddressData" Role="AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="StreetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Club_ClubHeadID">
     <End Type="RabbitClubModel.Members" Role="Members" Multiplicity="0..1" />
     <End Type="RabbitClubModel.Club" Role="Club" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Members">
-        <PropertyRef Name="MemberId" />
+        <PropertyRef Name="MemberID" />
       </Principal>
       <Dependent Role="Club">
         <PropertyRef Name="ClubHeadID" />
@@ -135,7 +206,7 @@
     <End Type="RabbitClubModel.MembersPhone" Role="MembersPhone" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Members">
-        <PropertyRef Name="MemberId" />
+        <PropertyRef Name="MemberID" />
       </Principal>
       <Dependent Role="MembersPhone">
         <PropertyRef Name="MemberID" />

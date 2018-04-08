@@ -1,6 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="RabbitClubModelStoreContainer" CdmEntityContainer="RabbitClubEntities">
+    <EntitySetMapping Name="AddressData">
+      <EntityTypeMapping TypeName="RabbitClubModel.AddressData">
+        <MappingFragment StoreEntitySet="AddressData">
+          <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="City">
       <EntityTypeMapping TypeName="RabbitClubModel.City">
         <MappingFragment StoreEntitySet="City">
@@ -33,9 +44,12 @@
     <EntitySetMapping Name="Members">
       <EntityTypeMapping TypeName="RabbitClubModel.Members">
         <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="PostBox" ColumnName="PostBox" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="MemberNumber" ColumnName="MemberNumber" />
           <ScalarProperty Name="MemberName" ColumnName="MemberName" />
-          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+          <ScalarProperty Name="MemberID" ColumnName="MemberID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -54,21 +68,6 @@
         <MappingFragment StoreEntitySet="PhoneTypes">
           <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
           <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Rabbits">
-      <EntityTypeMapping TypeName="RabbitClubModel.Rabbits">
-        <MappingFragment StoreEntitySet="Rabbits">
-          <ScalarProperty Name="PhotoAlbumId" ColumnName="PhotoAlbumId" />
-          <ScalarProperty Name="Ears" ColumnName="Ears" />
-          <ScalarProperty Name="Weight" ColumnName="Weight" />
-          <ScalarProperty Name="RabbitColor" ColumnName="RabbitColor" />
-          <ScalarProperty Name="RabbitGender" ColumnName="RabbitGender" />
-          <ScalarProperty Name="RabbitBirthDay" ColumnName="RabbitBirthDay" />
-          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-          <ScalarProperty Name="RabbitBreedId" ColumnName="RabbitBreedId" />
-          <ScalarProperty Name="RabbitId" ColumnName="RabbitId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

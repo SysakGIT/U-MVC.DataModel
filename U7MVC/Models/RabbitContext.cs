@@ -13,6 +13,10 @@ namespace U7MVC.Models
         public DbSet<Member> Members { get; set; }
 
         public DbSet<Users> LoginUsers { get; set; }
+
+        public DbSet<Region> RegionList { get; set; }
+
+        public DbSet<District> DistrictList { get; set; }
     }
   /*  public class RabbitDBInitializer : DropCreateDatabaseAlways<RabbitContext>
     {
