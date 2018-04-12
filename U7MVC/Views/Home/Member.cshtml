@@ -15,8 +15,16 @@
         @foreach (var b in ViewBag.Members)
         {
             <tr>
-                <td><p>@b.MemberName</p></td>
                 <td><p>@b.MemberNumber</p></td>
+                <td><p>@b.MemberLastName</p></td>
+                <td><p>@b.MemberFirstName</p></td>
+                <td><p>@b.RegionId</p></td>
+                <td><p>@b.DistrictId</p></td>
+                <td><p>@b.CityId</p></td>
+                <td><p>@b.Address</p></td>
+                <td><p>@b.House</p></td>
+                <td><p>@b.Flat</p></td>
+
             </tr>
         }
     </table>

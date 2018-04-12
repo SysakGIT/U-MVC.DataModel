@@ -43,6 +43,7 @@ namespace U7MVC.Controllers
             try
             {
                 db.Members.Add(memb);
+               
                 db.SaveChanges();
                 //return "dmads,ma.";
 
