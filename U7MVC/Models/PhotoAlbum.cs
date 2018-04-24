@@ -5,7 +5,7 @@ using System.Web;
 
 namespace U7MVC.Models
 {
-    public class PhotoAlbum
+    public class OldPhotoAlbum
     {
         public int AlbumId { get; set; }
         public int PhootoId { get; set; }

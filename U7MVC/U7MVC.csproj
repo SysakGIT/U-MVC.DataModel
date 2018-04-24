@@ -186,17 +186,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressData.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Breeds.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="City.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Club.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConfigureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="District.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MemberBreeds.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Members.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MembersPhone.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\District.cs" />
@@ -209,8 +233,47 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\RegionsDistrinct.cs" />
     <Compile Include="Models\Users.cs" />
+    <Compile Include="PhoneTypes.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitBreed.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RabbitClubEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RabbitClubEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RabbitClubEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RabbitClubEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RabbitClubEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="RabbitColor.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Region.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegionsDistrincts.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegionsDistrinctsCities.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Street.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Users.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -220,10 +283,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="RabbitClubEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RabbitClubEntity.edmx</DependentUpon>
+      <LastGenOutput>RabbitClubEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RabbitClubEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RabbitClubEntity.edmx</DependentUpon>
+      <LastGenOutput>RabbitClubEntity.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="RabbitClubEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RabbitClubEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="RabbitClubEntity.edmx.diagram">
+      <DependentUpon>RabbitClubEntity.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -280,6 +360,8 @@
     <Content Include="Views\Shared\_MyLoginPartial.cshtml" />
     <Content Include="Views\Configure\LeftMenuAdmin.cshtml" />
     <Content Include="Views\Account\AfterLogin.cshtml" />
+    <Content Include="Views\Configure\AddBreeds.cshtml" />
+    <Content Include="Views\Configure\AddNewBreed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,9 +6,9 @@ using System.Data.Entity;
 
 namespace U7MVC.Models
 {
-    public class RabbitContext : DbContext
+    public class OldRabbitContext : DbContext
     {
-        public DbSet<Rabbit> Rabbits { get; set; }
+        /*public DbSet<OldRabbit> Rabbits { get; set; }
 
         public DbSet<Member> Members { get; set; }
 
@@ -18,7 +18,7 @@ namespace U7MVC.Models
 
         public DbSet<District> DistrictList { get; set; }
 
-        public DbSet<RegionsDistrinct> RegionsDistrinctList { get; set; }
+        public DbSet<RegionsDistrinct> RegionsDistrinctList { get; set; }*/
     }
   /*  public class RabbitDBInitializer : DropCreateDatabaseAlways<RabbitContext>
     {

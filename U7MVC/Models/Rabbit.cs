@@ -5,7 +5,7 @@ using System.Web;
 
 namespace U7MVC.Models
 {
-    public class Rabbit
+    public class OldRabbit
     {
         public int RabbitId { get; set; }
         public int RabbitBreedId { get; set; } // flandr, rex ect.

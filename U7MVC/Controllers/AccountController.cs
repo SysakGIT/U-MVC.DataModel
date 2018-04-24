@@ -18,7 +18,9 @@ namespace U7MVC.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        RabbitContext db = new RabbitContext();
+        //RabbitContext db = new RabbitContext();
+
+        RabbitClubEntitiesConnection db = new RabbitClubEntitiesConnection();
 
         public AccountController()
         {
@@ -74,7 +76,7 @@ namespace U7MVC.Controllers
             if (GetModelState().IsValid)
             {
 
-                var v = db.LoginUsers.Where(x => x.UserEmail.Equals(model.Email)
+                var v = db.Users.Where(x => x.UserEmail.Equals(model.Email)
                             && x.UserPassword.Equals(model.Password)
                             && x.isActive.Equals(true)
                             ).FirstOrDefault();
@@ -82,7 +84,7 @@ namespace U7MVC.Controllers
                 {
                     Session["UserLoginId"] = v.Id;
                     Session["UserName"] = v.UserName;
-                    if (v.UserTypeId == 1) // logged as admin
+                    if (v.UserName == "Admin") // logged as admin
                     {
                         Session["AdminIsOnline"] = "1";
                     }

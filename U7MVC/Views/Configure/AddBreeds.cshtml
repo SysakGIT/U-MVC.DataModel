@@ -1,0 +1,39 @@
+﻿@model RabbitBreed
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddBreeds</title>
+</head>
+<body>
+    <div> 
+        <table>
+            <tr>
+                <td><p>Порода кролів</p></td>
+            </tr>
+
+            <tr>
+                @Html.ActionLink("Додати нову", "AddNewBreed", "Configure")
+            </tr>
+
+            @foreach (var b in ViewBag.Breed)
+            {
+                <tr>
+                    <td>
+                        <label>
+                             @b.BreedName
+                            </label>
+                        </td>
+                    
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

@@ -7,7 +7,7 @@ using System.Web;
 namespace U7MVC.Models
 {
     [Table("Region")]
-    public class Region
+    public class OldRegion
     {
         public int ID { get; set; }
         public string RegionName { get; set; }

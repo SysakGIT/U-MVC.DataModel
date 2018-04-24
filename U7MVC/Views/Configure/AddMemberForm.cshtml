@@ -1,15 +1,68 @@
-﻿@using U7MVC.Models
-@model Member
+﻿
+@model U7MVC.Members
 
 @{
     //Layout = null;
 }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    function getDistrictList()
+    {
+        //debugger;
+        var regionId = $("#RegionId").val();
+        $.ajax({
+            url: '/Configure/GetDistrictList',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ regionId: +regionId }),
+            success: function (result) {
+                $("#DistrictId").html("");
+                
+                $.each($.parseJSON(result), function (i, district)
+                {
+                    $("#DistrictId").append($('<option></option>').val(district.DistrictId)
+                        .html(district.DistrictName))
+                })
+
+            },
+            error: function ()
+                { alert("Whooaaa! Something went wrong..") },
+        });
+    }
+    function getCityList() {
+        //debugger;
+        var regionId = $("#RegionId").val();
+        var districtId = $("#DistrictId").val();
+        $.ajax({
+            url: '/Configure/GetCityList',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({regionId: +regionId , districtId: +districtId }),
+            success: function (result) {
+                $("#CityId").html("");
+
+                $.each($.parseJSON(result), function (i, city) {
+                    $("#CityId").append($('<option></option>').val(city.CityId)
+                        .html(city.CityName))
+                })
+
+            },
+            error: function ()
+            { alert("Whooaaa! Something went wrong..") },
+        });
+    }
+</script>
+
+
 <div class="row">
     <div class="col-md-8">
         <section id="addNewMember">
             @using (Html.BeginForm("AddMembers", "Configure", FormMethod.Post))
             {
-                @Html.HiddenFor(m => m.MemberId)
+                @Html.HiddenFor(m => m.MemberID)
 
                 <h4>Додати нового Члена Клубу.</h4>
                 <hr />
@@ -46,7 +99,7 @@
                     Область
                     <div class="col-md-10">
                         
-                        <select id="RegionId" name="RegionId">
+                        <select id="RegionId" name="RegionId" onchange="getDistrictList();getCityList()">
                             
                           @foreach (var b in ViewBag.Reg)
                           {
@@ -63,7 +116,7 @@
                 <div class="form-group">
                     Район
                     <div class="col-md-10">
-                        <select id="DistrictId" name="DistrictId">
+                        <select id="DistrictId" name="DistrictId" onchange="getCityList()">
                             @foreach (var b in ViewBag.District)
                             {
                                 <option value="@b.DistrictId">
@@ -79,10 +132,10 @@
                     Село/Місто
                     <div class="col-md-10">
                         <select id="CityId" name="CityId">
-                            @foreach (var b in ViewBag.District)
+                            @foreach (var b in ViewBag.lstCity)
                             {
-                                <option value="@b.DistrictId">
-                                    @b.DistrictName
+                                <option value="@b.CityId">
+                                    @b.CityName
                                 </option>
 
                             }

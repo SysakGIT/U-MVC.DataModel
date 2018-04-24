@@ -5,7 +5,7 @@ using System.Web;
 
 namespace U7MVC.Models
 {
-    public class Users
+    public class OldUsers
     {
         
         public int Id { get; set; }

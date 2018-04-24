@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RabbitClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AddressData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RegionId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="StreetId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.fc_City_CityId" FromRole="AddressData" ToRole="City" />
+    <NavigationProperty Name="District" Relationship="Self.fc_District_DistrictId" FromRole="AddressData" ToRole="District" />
+    <NavigationProperty Name="Region" Relationship="Self.fc_Region_RegionId" FromRole="AddressData" ToRole="Region" />
+    <NavigationProperty Name="Street" Relationship="Self.fc_Street_StreetId" FromRole="AddressData" ToRole="Street" />
+  </EntityType>
+  <EntityType Name="Breeds">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RabbitBreedId" Type="Int32" Nullable="false" />
+    <Property Name="RabbitColorId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MemberBreeds" Relationship="Self.fc_MemberBreeds_BreedsId" FromRole="Breeds" ToRole="MemberBreeds" />
+    <NavigationProperty Name="RabbitBreed" Relationship="Self.fc_RabbitBreed_RabbitBreedId" FromRole="Breeds" ToRole="RabbitBreed" />
+    <NavigationProperty Name="RabbitColor" Relationship="Self.fc_RabbitColor_RabbitColorId" FromRole="Breeds" ToRole="RabbitColor" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="Self.fc_City_CityId" FromRole="City" ToRole="AddressData" />
+    <NavigationProperty Name="Members" Relationship="Self.fk_Members_CityID" FromRole="City" ToRole="Members" />
+  </EntityType>
+  <EntityType Name="Club">
+    <Key>
+      <PropertyRef Name="ClubID" />
+    </Key>
+    <Property Name="ClubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClubName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ClubNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ClubHeadID" Type="Int32" />
+    <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Members" Relationship="Self.fk_Club_ClubHeadID" FromRole="Club" ToRole="Members" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="Self.fc_District_DistrictId" FromRole="District" ToRole="AddressData" />
+    <NavigationProperty Name="Members" Relationship="Self.fk_Members_DistrictID" FromRole="District" ToRole="Members" />
+  </EntityType>
+  <EntityType Name="MemberBreeds">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MembersId" Type="Int32" Nullable="false" />
+    <Property Name="BreedsId" Type="Int32" Nullable="false" />
+    <Property Name="RowCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Breeds" Relationship="Self.fc_MemberBreeds_BreedsId" FromRole="MemberBreeds" ToRole="Breeds" />
+    <NavigationProperty Name="Members" Relationship="Self.fc_MemberBreeds_MembersId" FromRole="MemberBreeds" ToRole="Members" />
+  </EntityType>
+  <EntityType Name="Members">
+    <Key>
+      <PropertyRef Name="MemberID" />
+    </Key>
+    <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberLastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MemberFirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MemberNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="RegionID" Type="Int32" />
+    <Property Name="DistrictID" Type="Int32" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="House" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Flat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="City" Relationship="Self.fk_Members_CityID" FromRole="Members" ToRole="City" />
+    <NavigationProperty Name="Club" Relationship="Self.fk_Club_ClubHeadID" FromRole="Members" ToRole="Club" />
+    <NavigationProperty Name="District" Relationship="Self.fk_Members_DistrictID" FromRole="Members" ToRole="District" />
+    <NavigationProperty Name="MemberBreeds" Relationship="Self.fc_MemberBreeds_MembersId" FromRole="Members" ToRole="MemberBreeds" />
+    <NavigationProperty Name="Region" Relationship="Self.fk_Members_RegionID" FromRole="Members" ToRole="Region" />
+    <NavigationProperty Name="MembersPhone" Relationship="Self.fk_MembersPhone_MemberID" FromRole="Members" ToRole="MembersPhone" />
+  </EntityType>
+  <EntityType Name="MembersPhone">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberID" Type="Int32" />
+    <Property Name="PhoneTypeID" Type="Int32" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Members" Relationship="Self.fk_MembersPhone_MemberID" FromRole="MembersPhone" ToRole="Members" />
+    <NavigationProperty Name="PhoneTypes" Relationship="Self.fk_MembersPhone_PhoneTypeID" FromRole="MembersPhone" ToRole="PhoneTypes" />
+  </EntityType>
+  <EntityType Name="PhoneTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MembersPhone" Relationship="Self.fk_MembersPhone_PhoneTypeID" FromRole="PhoneTypes" ToRole="MembersPhone" />
+  </EntityType>
+  <EntityType Name="RabbitBreed">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BreedName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Breeds" Relationship="Self.fc_RabbitBreed_RabbitBreedId" FromRole="RabbitBreed" ToRole="Breeds" />
+  </EntityType>
+  <EntityType Name="RabbitColor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ColorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Breeds" Relationship="Self.fc_RabbitColor_RabbitColorId" FromRole="RabbitColor" ToRole="Breeds" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="RegionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="Self.fc_Region_RegionId" FromRole="Region" ToRole="AddressData" />
+    <NavigationProperty Name="Members" Relationship="Self.fk_Members_RegionID" FromRole="Region" ToRole="Members" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="StreetName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AddressData" Relationship="Self.fc_Street_StreetId" FromRole="Street" ToRole="AddressData" />
+  </EntityType>
+  <Association Name="fc_City_CityId">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_District_DistrictId">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_Region_RegionId">
+    <End Role="Region" Type="Self.Region" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_Street_StreetId">
+    <End Role="Street" Type="Self.Street" Multiplicity="1" />
+    <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressData">
+        <PropertyRef Name="StreetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_MemberBreeds_BreedsId">
+    <End Role="Breeds" Type="Self.Breeds" Multiplicity="1" />
+    <End Role="MemberBreeds" Type="Self.MemberBreeds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Breeds">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MemberBreeds">
+        <PropertyRef Name="BreedsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_RabbitBreed_RabbitBreedId">
+    <End Role="RabbitBreed" Type="Self.RabbitBreed" Multiplicity="1" />
+    <End Role="Breeds" Type="Self.Breeds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RabbitBreed">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Breeds">
+        <PropertyRef Name="RabbitBreedId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_RabbitColor_RabbitColorId">
+    <End Role="RabbitColor" Type="Self.RabbitColor" Multiplicity="1" />
+    <End Role="Breeds" Type="Self.Breeds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RabbitColor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Breeds">
+        <PropertyRef Name="RabbitColorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Members_CityID">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Members">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Club_ClubHeadID">
+    <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+    <End Role="Club" Type="Self.Club" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="Club">
+        <PropertyRef Name="ClubHeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Members_DistrictID">
+    <End Role="District" Type="Self.District" Multiplicity="0..1" />
+    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Members">
+        <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fc_MemberBreeds_MembersId">
+    <End Role="Members" Type="Self.Members" Multiplicity="1" />
+    <End Role="MemberBreeds" Type="Self.MemberBreeds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="MemberBreeds">
+        <PropertyRef Name="MembersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Members_RegionID">
+    <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Members">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MembersPhone_MemberID">
+    <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+    <End Role="MembersPhone" Type="Self.MembersPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="MembersPhone">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MembersPhone_PhoneTypeID">
+    <End Role="PhoneTypes" Type="Self.PhoneTypes" Multiplicity="0..1" />
+    <End Role="MembersPhone" Type="Self.MembersPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MembersPhone">
+        <PropertyRef Name="PhoneTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RabbitClubEntitiesConnection" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AddressData" EntityType="Self.AddressData" />
+    <EntitySet Name="Breeds" EntityType="Self.Breeds" />
+    <EntitySet Name="City" EntityType="Self.City" />
+    <EntitySet Name="Club" EntityType="Self.Club" />
+    <EntitySet Name="District" EntityType="Self.District" />
+    <EntitySet Name="MemberBreeds" EntityType="Self.MemberBreeds" />
+    <EntitySet Name="Members" EntityType="Self.Members" />
+    <EntitySet Name="MembersPhone" EntityType="Self.MembersPhone" />
+    <EntitySet Name="PhoneTypes" EntityType="Self.PhoneTypes" />
+    <EntitySet Name="RabbitBreed" EntityType="Self.RabbitBreed" />
+    <EntitySet Name="RabbitColor" EntityType="Self.RabbitColor" />
+    <EntitySet Name="Region" EntityType="Self.Region" />
+    <EntitySet Name="Street" EntityType="Self.Street" />
+    <AssociationSet Name="fc_City_CityId" Association="Self.fc_City_CityId">
+      <End Role="City" EntitySet="City" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_District_DistrictId" Association="Self.fc_District_DistrictId">
+      <End Role="District" EntitySet="District" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_Region_RegionId" Association="Self.fc_Region_RegionId">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_Street_StreetId" Association="Self.fc_Street_StreetId">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="AddressData" EntitySet="AddressData" />
+    </AssociationSet>
+    <AssociationSet Name="fc_MemberBreeds_BreedsId" Association="Self.fc_MemberBreeds_BreedsId">
+      <End Role="Breeds" EntitySet="Breeds" />
+      <End Role="MemberBreeds" EntitySet="MemberBreeds" />
+    </AssociationSet>
+    <AssociationSet Name="fc_RabbitBreed_RabbitBreedId" Association="Self.fc_RabbitBreed_RabbitBreedId">
+      <End Role="RabbitBreed" EntitySet="RabbitBreed" />
+      <End Role="Breeds" EntitySet="Breeds" />
+    </AssociationSet>
+    <AssociationSet Name="fc_RabbitColor_RabbitColorId" Association="Self.fc_RabbitColor_RabbitColorId">
+      <End Role="RabbitColor" EntitySet="RabbitColor" />
+      <End Role="Breeds" EntitySet="Breeds" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Members_CityID" Association="Self.fk_Members_CityID">
+      <End Role="City" EntitySet="City" />
+      <End Role="Members" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Club_ClubHeadID" Association="Self.fk_Club_ClubHeadID">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="Club" EntitySet="Club" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Members_DistrictID" Association="Self.fk_Members_DistrictID">
+      <End Role="District" EntitySet="District" />
+      <End Role="Members" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="fc_MemberBreeds_MembersId" Association="Self.fc_MemberBreeds_MembersId">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberBreeds" EntitySet="MemberBreeds" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Members_RegionID" Association="Self.fk_Members_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="Members" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MembersPhone_MemberID" Association="Self.fk_MembersPhone_MemberID">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MembersPhone" EntitySet="MembersPhone" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MembersPhone_PhoneTypeID" Association="Self.fk_MembersPhone_PhoneTypeID">
+      <End Role="PhoneTypes" EntitySet="PhoneTypes" />
+      <End Role="MembersPhone" EntitySet="MembersPhone" />
+    </AssociationSet>
+    <EntitySet Name="RegionsDistrincts" EntityType="RabbitClubModel.RegionsDistrincts" />
+    <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
+    <EntitySet Name="RegionsDistrinctsCities" EntityType="RabbitClubModel.RegionsDistrinctsCities" />
+  </EntityContainer>
+  <EntityType Name="RegionsDistrincts">
+    <Key>
+      <PropertyRef Name="RegionId" />
+      <PropertyRef Name="DistrictId" />
+    </Key>
+    <Property Name="RegionId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" />
+    <Property Name="UserTypeId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="RegionsDistrinctsCities">
+    <Key>
+      <PropertyRef Name="RegionId" />
+      <PropertyRef Name="DistrictId" />
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="RegionId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

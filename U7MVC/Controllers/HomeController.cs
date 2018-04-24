@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using U7MVC.Models;
+//using U7MVC.Models;
 
 namespace U7MVC.Controllers
 {
     public class HomeController : Controller
     {
-        RabbitContext db = new RabbitContext();
-
+        //RabbitContext db = new RabbitContext();
+        RabbitClubEntitiesConnection db = new RabbitClubEntitiesConnection();
 
         public ActionResult Index()
         {

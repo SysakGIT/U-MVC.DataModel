@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="38594939c0654aa798e260ff4505e52c" Name="Diagram1">
+        <EntityTypeShape EntityType="RabbitClubModel.AddressData" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.Breeds" Width="1.5" PointX="9" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.City" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.Club" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.District" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.MemberBreeds" Width="1.5" PointX="11.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.Members" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.MembersPhone" Width="1.5" PointX="11.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.PhoneTypes" Width="1.5" PointX="9" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.RabbitBreed" Width="1.5" PointX="6.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.RabbitColor" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.Region" Width="1.5" PointX="3.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RabbitClubModel.Street" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="RabbitClubModel.fc_City_CityId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_District_DistrictId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_Region_RegionId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_Street_StreetId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_MemberBreeds_BreedsId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_RabbitBreed_RabbitBreedId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_RabbitColor_RabbitColorId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fk_Members_CityID" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fk_Club_ClubHeadID" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fk_Members_DistrictID" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fc_MemberBreeds_MembersId" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fk_Members_RegionID" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fk_MembersPhone_MemberID" ManuallyRouted="false" />
+        <AssociationConnector Association="RabbitClubModel.fk_MembersPhone_PhoneTypeID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RabbitClubModel.RegionsDistrincts" Width="2.875" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RabbitClubModel.Users" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="RabbitClubModel.RegionsDistrinctsCities" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

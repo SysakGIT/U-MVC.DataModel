@@ -80,7 +80,7 @@ IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'U
 			[UserName] [NVARCHAR] (200),
 			[UserEmail] [NVARCHAR] (200),
 			[UserPassword] [NVARCHAR] (200),
-
+			[UserTypeId] int,
 			[isActive] [BIT] 
 			
 		)
@@ -155,15 +155,67 @@ IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'A
 	END
 GO
 
-drop view RegionsDistrincts 
+
+IF  EXISTS ( SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'RegionsDistrincts' AND TABLE_TYPE = 'VIEW' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+	drop view RegionsDistrincts 
+END
 go
 
-	create   view RegionsDistrincts 
-	as
+create   view RegionsDistrincts 
+as
 select distinct ad.RegionId, ad.DistrictId, d.DistrictName
 	from AddressData ad
 		inner join Region r on ad.RegionId = r.Id
 		inner join District d on ad.DistrictId = d.Id
+go
 
-	go
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'RabbitBreed' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[RabbitBreed] (
+			[ID] [INT] IDENTITY CONSTRAINT pk__RabbitBreed_ID PRIMARY KEY,
+			[BreedName] [NVARCHAR] (200)
+		)
+	END
+GO
+
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'RabbitColor' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[RabbitColor] (
+			[ID] [INT] IDENTITY CONSTRAINT pk__RabbitColor_ID PRIMARY KEY,
+			[ColorName] [NVARCHAR] (200)
+		)
+	END
+GO
+
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Breeds' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[Breeds] (
+			[ID] [INT] IDENTITY CONSTRAINT pk__Breeds_ID PRIMARY KEY,
+			[RabbitBreedId] INT Not NULL CONSTRAINT fc_RabbitBreed_RabbitBreedId FOREIGN KEY REFERENCES RabbitBreed(Id),
+			[RabbitColorId] INT Not NULL CONSTRAINT fc_RabbitColor_RabbitColorId FOREIGN KEY REFERENCES RabbitColor(Id)
+		)
+	END
+GO
+
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Breeds' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[Breeds] (
+			[ID] [INT] IDENTITY CONSTRAINT pk__Breeds_ID PRIMARY KEY,
+			[RabbitBreedId] INT Not NULL CONSTRAINT fc_RabbitBreed_RabbitBreedId FOREIGN KEY REFERENCES RabbitBreed(Id),
+			[RabbitColorId] INT Not NULL CONSTRAINT fc_RabbitBreed_RabbitColorId FOREIGN KEY REFERENCES RabbitColor(Id)
+		)
+	END
+GO
+
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'MemberBreeds' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[MemberBreeds] (
+			[ID] [INT] IDENTITY CONSTRAINT pk__MemberBreeds_ID PRIMARY KEY,
+			[MembersId] INT Not NULL CONSTRAINT fc_MemberBreeds_MembersId FOREIGN KEY REFERENCES Members(MemberID),
+			[BreedsId] INT Not NULL CONSTRAINT fc_MemberBreeds_BreedsId FOREIGN KEY REFERENCES Breeds(Id),
+			[RowCreated] DATETIME NOT NULL CONSTRAINT DF_MemberBreeds_RowCreated DEFAULT GETDATE()
+		)
+	END
+GO
 

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using U7MVC.Models;
+using System.Web.Script.Serialization;
 
 namespace U7MVC.Controllers
 {
     public class ConfigureController : Controller
     {
-        RabbitContext db = new RabbitContext();
+        //RabbitContext db = new RabbitContext();
 
+        RabbitClubEntitiesConnection db = new RabbitClubEntitiesConnection();
         // GET: Configure
         [HttpGet]
         public ActionResult AddMembers()
@@ -29,16 +30,49 @@ namespace U7MVC.Controllers
             var member = db.Members;
             ViewBag.Members = member;
 
-            IEnumerable<Region> reg = db.RegionList;
-            ViewBag.Reg = reg;
+            var reg = db.Region;
+            ViewBag.Reg = reg.ToList();
 
-            IEnumerable<RegionsDistrinct> distr = db.RegionsDistrinctList.Where(r =>r.RegionId == 1);
-            ViewBag.District = distr; 
+            var distr = db.RegionsDistrincts.Where(r =>r.RegionId == 1);
+            ViewBag.District = distr.ToList();
+
+            int disrtId = distr.FirstOrDefault().DistrictId;
+
+            var lstCity = db.RegionsDistrinctsCities.Where(x => x.DistrictId == 1
+                && x.RegionId == disrtId);
+            ViewBag.lstCity = lstCity.ToList();
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddMembers(Member memb)
+        public ActionResult GetDistrictList(string regionID)
+        {
+            List<RegionsDistrincts> lstdistrict = new List<RegionsDistrincts>();
+            int regioniD = Convert.ToInt32(regionID);
+            lstdistrict = db.RegionsDistrincts.Where(x => x.RegionId == regioniD).ToList<RegionsDistrincts>();
+           
+            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+            string result = javaScriptSerializer.Serialize(lstdistrict);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetCityList(string regionID, string districtID)
+        {
+            List<RegionsDistrinctsCities> lstcity = new List<RegionsDistrinctsCities>();
+            int regioniD = Convert.ToInt32(regionID);
+            int districtiD = Convert.ToInt32(districtID);
+            lstcity = db.RegionsDistrinctsCities.Where(x => x.DistrictId == districtiD 
+                && x.RegionId == regioniD)
+                    .ToList<RegionsDistrinctsCities>();
+
+            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+            string result = javaScriptSerializer.Serialize(lstcity);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult AddMembers(Members memb)
         {
             try
             {
@@ -135,6 +169,48 @@ namespace U7MVC.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        // GET: Configure
+        [HttpGet]
+        public ActionResult AddBreeds()
+        {
+            var breed = db.RabbitBreed;
+            ViewBag.Breed = breed;
+
+            var color = db.Breeds.Where(r => r.RabbitBreedId == 1);
+            ViewBag.Color = color;
+            return View();
+
+        }
+        public ActionResult AddNewBreed()
+        {
+            var breed = db.RabbitBreed;
+            ViewBag.Breed = breed;
+
+            var color = db.Breeds.Where(r => r.RabbitBreedId == 1);
+            ViewBag.Color = color;
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult AddBreeds(RabbitBreed breed)
+        {
+            try
+            {
+                db.RabbitBreed.Add(breed);
+
+                db.SaveChanges();
+                //return "dmads,ma.";
+
+                return RedirectToAction("AddBreeds");
+            }
+            catch
+            {
+                return View();
+                //return "dmads,ma.";
             }
         }
     }

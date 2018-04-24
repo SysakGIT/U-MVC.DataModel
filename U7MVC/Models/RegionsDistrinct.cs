@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace U7MVC.Models
 {
-    public class RegionsDistrinct
+    public class OldRegionsDistrinct
     {
         [Key]
         [Column(Order = 1)]
