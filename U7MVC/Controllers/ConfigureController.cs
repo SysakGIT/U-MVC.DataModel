@@ -16,7 +16,7 @@ namespace U7MVC.Controllers
         [HttpGet]
         public ActionResult AddMembers()
         {
-            var member = db.Members;
+            var member = db.v_Members;
             ViewBag.Members = member;
             return View();
         }

@@ -19,7 +19,7 @@ namespace U7MVC.Controllers
 
         public ActionResult Member()
         {
-            var member = db.Members;
+            var member = db.v_Members;
             ViewBag.Members = member;
 
             return View();

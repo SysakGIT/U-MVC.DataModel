@@ -170,6 +170,22 @@ select distinct ad.RegionId, ad.DistrictId, d.DistrictName
 		inner join District d on ad.DistrictId = d.Id
 go
 
+IF  EXISTS ( SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'RegionsDistrinctsCities' AND TABLE_TYPE = 'VIEW' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+	drop view RegionsDistrinctsCities
+END
+go
+
+create   view RegionsDistrinctsCities 
+as
+select distinct ad.RegionId, ad.DistrictId, d.DistrictName, ad.CityId, c.CityName
+	from AddressData ad
+		inner join Region r on ad.RegionId = r.Id
+		inner join District d on ad.DistrictId = d.Id
+		inner join City c on ad.CityId = c.ID
+go
+
+
 IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'RabbitBreed' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
 	BEGIN
 		CREATE TABLE [dbo].[RabbitBreed] (
@@ -219,3 +235,20 @@ IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'M
 	END
 GO
 
+
+IF  EXISTS ( SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'v_Members' AND TABLE_TYPE = 'VIEW' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+	drop view v_Members 
+END
+go
+
+create   view v_Members 
+as
+select m.MemberID, m.MemberFirstName, m.MemberLastName, m.MemberNumber
+	,m.RegionID, r.RegionName, m.DistrictID, d.DistrictName,
+	m.CityID, c.CityName, m.Address, m.House, m.Flat, m.PostBox
+	from members m
+		inner join Region r on m.RegionId = r.Id
+		inner join District d on m.DistrictId = d.Id
+		inner join City c on m.CityID = c.ID
+go

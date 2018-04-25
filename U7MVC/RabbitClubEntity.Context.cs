@@ -41,5 +41,6 @@ namespace U7MVC
         public virtual DbSet<RegionsDistrincts> RegionsDistrincts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<RegionsDistrinctsCities> RegionsDistrinctsCities { get; set; }
+        public virtual DbSet<v_Members> v_Members { get; set; }
     }
 }

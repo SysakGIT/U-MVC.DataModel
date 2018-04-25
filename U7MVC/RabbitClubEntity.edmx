@@ -154,6 +154,27 @@ warning 6002: The table/view 'RabbitClub.dbo.RegionsDistrinctsCities' does not h
           <Property Name="CityId" Type="int" Nullable="false" />
           <Property Name="CityName" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_Members">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="MemberFirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="MemberLastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="MemberNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="RegionID" Type="int" />
+          <Property Name="RegionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="House" Type="nvarchar" MaxLength="10" />
+          <Property Name="Flat" Type="nvarchar" MaxLength="10" />
+          <Property Name="PostBox" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <Association Name="fc_City_CityId">
           <End Role="City" Type="Self.City" Multiplicity="1" />
           <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
@@ -352,6 +373,24 @@ warning 6002: The table/view 'RabbitClub.dbo.RegionsDistrinctsCities' does not h
     [RegionsDistrinctsCities].[CityId] AS [CityId], 
     [RegionsDistrinctsCities].[CityName] AS [CityName]
     FROM [dbo].[RegionsDistrinctsCities] AS [RegionsDistrinctsCities]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_Members" EntityType="Self.v_Members" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_Members].[MemberID] AS [MemberID], 
+    [v_Members].[MemberFirstName] AS [MemberFirstName], 
+    [v_Members].[MemberLastName] AS [MemberLastName], 
+    [v_Members].[MemberNumber] AS [MemberNumber], 
+    [v_Members].[RegionID] AS [RegionID], 
+    [v_Members].[RegionName] AS [RegionName], 
+    [v_Members].[DistrictID] AS [DistrictID], 
+    [v_Members].[DistrictName] AS [DistrictName], 
+    [v_Members].[CityID] AS [CityID], 
+    [v_Members].[CityName] AS [CityName], 
+    [v_Members].[Address] AS [Address], 
+    [v_Members].[House] AS [House], 
+    [v_Members].[Flat] AS [Flat], 
+    [v_Members].[PostBox] AS [PostBox]
+    FROM [dbo].[v_Members] AS [v_Members]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="fc_City_CityId" Association="Self.fc_City_CityId">
             <End Role="City" EntitySet="City" />
@@ -796,6 +835,7 @@ warning 6002: The table/view 'RabbitClub.dbo.RegionsDistrinctsCities' does not h
           <EntitySet Name="RegionsDistrincts" EntityType="RabbitClubModel.RegionsDistrincts" />
           <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
           <EntitySet Name="RegionsDistrinctsCities" EntityType="RabbitClubModel.RegionsDistrinctsCities" />
+          <EntitySet Name="v_Members" EntityType="RabbitClubModel.v_Members" />
         </EntityContainer>
         <EntityType Name="RegionsDistrincts">
           <Key>
@@ -828,6 +868,25 @@ warning 6002: The table/view 'RabbitClub.dbo.RegionsDistrinctsCities' does not h
           <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="v_Members">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="MemberFirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MemberLastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MemberNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RegionID" Type="Int32" />
+          <Property Name="RegionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="DistrictName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="House" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Flat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -990,6 +1049,26 @@ warning 6002: The table/view 'RabbitClub.dbo.RegionsDistrinctsCities' does not h
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
                 <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_Members">
+            <EntityTypeMapping TypeName="RabbitClubModel.v_Members">
+              <MappingFragment StoreEntitySet="v_Members">
+                <ScalarProperty Name="PostBox" ColumnName="PostBox" />
+                <ScalarProperty Name="Flat" ColumnName="Flat" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="MemberNumber" ColumnName="MemberNumber" />
+                <ScalarProperty Name="MemberLastName" ColumnName="MemberLastName" />
+                <ScalarProperty Name="MemberFirstName" ColumnName="MemberFirstName" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
