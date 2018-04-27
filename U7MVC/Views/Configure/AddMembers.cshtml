@@ -2,24 +2,35 @@
 @model Members
 
 @{
-    ViewBag.Title = "AddMembers";
+    ViewBag.Title = "Члени Ужгорожського клубу";
     //Layout = "~/Views/_ViewStart.cshtml";
 }
 
-<h2>AddMembers</h2>
-
 <h2>Члени Ужгорожського клубу</h2>
+
+
+    @Html.ActionLink("Додати нового", "AddmemberForm", "Configure")
+
 <div>
-    <table>
+    <table class="names">
         <tr>
-            <td><p>Прізвище, імя, по-батькові</p></td>
-            <td><p>Номер в клубі</p></td>
+            <th><p>№ в клубі</p></th>
+            <th><p>Прізвище</p></th>
+            <th><p>Ім'я</p></th>
+            <th><p>Область</p></th>
+            <th><p>Район</p></th>
+            <th><p>Село/Місто</p></th>
+            <th><p>Вулиця</p></th>
+            <th><p>Дім</p></th>
+            <th><p>Квартира</p></th>
+            
+            <th><p>Телефон Київтар</p></th>
+            <th><p>Телефон Vodafon</p></th>
+            
         </tr>
-       
-        <tr>
-            @Html.ActionLink("Додати нового", "AddmemberForm", "Configure")
-        </tr>
+
         
+
         @foreach (var b in ViewBag.Members)
         {
             <tr>

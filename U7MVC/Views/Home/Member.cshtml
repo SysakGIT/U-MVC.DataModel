@@ -7,10 +7,21 @@
 
 <h2>Члени Ужгорожського клубу</h2>
 <div>
-    <table>
+    <table class="names">
         <tr>
-            <td><p>Прізвище, імя, по-батькові</p></td>
-            <td><p>Номер в клубі</p></td>
+            <th><p>№ в клубі</p></th>
+            <th><p>Прізвище</p></th>
+            <th><p>Ім'я</p></th>
+            <th><p>Область</p></th>
+            <th><p>Район</p></th>
+            <th><p>Село/Місто</p></th>
+            <th><p>Вулиця</p></th>
+            <th><p>Дім</p></th>
+            <th><p>Квартира</p></th>
+            <th><p>Індекс</p></th>
+            <th><p>Телефон Київтар</p></th>
+            <th><p>Телефон Vodafon</p></th>
+            <th><p>Інші телефони</p></th>
         </tr>
         @foreach (var b in ViewBag.Members)
         {
@@ -28,5 +39,5 @@
             </tr>
         }
     </table>
-</div>
+</divclass="names">
 

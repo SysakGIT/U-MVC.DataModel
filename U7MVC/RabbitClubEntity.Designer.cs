@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'H:\GIT\WEBU7DataModel\U7MVC\RabbitClubEntity.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\DW\git\U-MVC.DataModel\U7MVC\RabbitClubEntity.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
