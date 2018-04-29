@@ -223,6 +223,7 @@
       <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CheckBoxListItem.cs" />
     <Compile Include="Models\District.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -272,6 +273,12 @@
       <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="v_Members.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="v_RabbitBreedColorList.cs">
       <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -362,6 +369,8 @@
     <Content Include="Views\Account\AfterLogin.cshtml" />
     <Content Include="Views\Configure\AddBreeds.cshtml" />
     <Content Include="Views\Configure\AddNewBreed.cshtml" />
+    <Content Include="Views\Configure\AddNewColor.cshtml" />
+    <Content Include="Views\Configure\AddRelateBreedAndColor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

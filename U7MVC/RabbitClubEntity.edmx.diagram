@@ -36,6 +36,7 @@
         <EntityTypeShape EntityType="RabbitClubModel.Users" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="RabbitClubModel.RegionsDistrinctsCities" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="RabbitClubModel.v_Members" Width="1.5" PointX="11.375" PointY="9.75" />
+        <EntityTypeShape EntityType="RabbitClubModel.v_RabbitBreedColorList" Width="1.5" PointX="0.75" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,6 +12,8 @@ namespace U7MVC
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class RabbitClubEntitiesConnection : DbContext
     {
@@ -42,5 +44,23 @@ namespace U7MVC
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<RegionsDistrinctsCities> RegionsDistrinctsCities { get; set; }
         public virtual DbSet<v_Members> v_Members { get; set; }
+        public virtual DbSet<v_RabbitBreedColorList> v_RabbitBreedColorList { get; set; }
+    
+        public virtual int UpdateRabbitColorrelation(Nullable<int> breedId, Nullable<int> colorId, Nullable<bool> value)
+        {
+            var breedIdParameter = breedId.HasValue ?
+                new ObjectParameter("BreedId", breedId) :
+                new ObjectParameter("BreedId", typeof(int));
+    
+            var colorIdParameter = colorId.HasValue ?
+                new ObjectParameter("ColorId", colorId) :
+                new ObjectParameter("ColorId", typeof(int));
+    
+            var valueParameter = value.HasValue ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateRabbitColorrelation", breedIdParameter, colorIdParameter, valueParameter);
+        }
     }
 }

@@ -1,0 +1,42 @@
+﻿@model List<U7MVC.Models.CheckBoxListItem>
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.BredName</title>
+</head>
+@using (Html.BeginForm("AddNewBreedColor", "Configure", FormMethod.Post))
+{
+    <div>
+        <p>Порода та окраси кролів</p>
+        <p> @ViewBag.BredName </p>
+       
+        <table>
+           
+            @for (var i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(it => it[i].ParentID)
+                        @Html.HiddenFor(it => it[i].ID)
+
+                        @Html.DisplayFor(it => it[i].Display)
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(it => it[i].IsChecked, null)
+
+                    </td>
+
+                </tr>
+           }
+        </table>
+        <input id="Add" type="submit" value="submit" />  
+    </div>
+}
+</html>

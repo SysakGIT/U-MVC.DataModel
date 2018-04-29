@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using U7MVC.Models;
 
 namespace U7MVC.Controllers
 {
@@ -179,8 +180,12 @@ namespace U7MVC.Controllers
             var breed = db.RabbitBreed;
             ViewBag.Breed = breed;
 
-            var color = db.Breeds.Where(r => r.RabbitBreedId == 1);
+            var color = db.RabbitColor;// Breeds.Where(r => r.RabbitBreedId == 1);
             ViewBag.Color = color;
+
+            var breedId = breed.FirstOrDefault().ID;
+            var breedColorList = db.v_RabbitBreedColorList.Where(rcl => rcl.BreedId == breedId);
+            ViewBag.BreedColorList = breedColorList;
             return View();
 
         }
@@ -189,7 +194,7 @@ namespace U7MVC.Controllers
             var breed = db.RabbitBreed;
             ViewBag.Breed = breed;
 
-            var color = db.Breeds.Where(r => r.RabbitBreedId == 1);
+            var color = db.RabbitColor;
             ViewBag.Color = color;
             return View();
 
@@ -213,5 +218,69 @@ namespace U7MVC.Controllers
                 //return "dmads,ma.";
             }
         }
+
+        public ActionResult AddNewColor()
+        {
+            var color = db.RabbitColor;
+            ViewBag.Color = color;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddColors(RabbitColor color)
+        {
+            try
+            {
+                db.RabbitColor.Add(color);
+
+                db.SaveChanges();
+
+                return RedirectToAction("AddBreeds");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        
+        
+        public ActionResult AddNewBreedColor(List<CheckBoxListItem> breedColor)
+        {
+            try
+            {
+                foreach( var l in  breedColor)
+                {
+                    db.UpdateRabbitColorrelation(l.ParentID, l.ID, l.IsChecked);
+                }
+                var a = breedColor;
+                return RedirectToAction("AddBreeds");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult AddRelateBreedAndColor(int Id)
+        {
+            var breedName = db.RabbitBreed.Where(b => b.ID == Id).Select( a=> a.BreedName).Single() ;
+            List<CheckBoxListItem> colorList = new List<CheckBoxListItem>();
+            var breedColorList = db.v_RabbitBreedColorList.Where(rcl => rcl.BreedId == Id)
+                    .Select(l => new { ColorId = l.ColorId, ColorName = l.ColorName, IsSelected = l.IsSelected});
+            foreach (var a in breedColorList)
+            {
+                colorList.Add( new CheckBoxListItem { ParentID = Id, ID = a.ColorId, Display = a.ColorName
+                        , IsChecked = Convert.ToBoolean(a.IsSelected)});
+
+            }
+            
+            //ViewBag.BreedColorList = breedColorList;
+            //ViewBag.ColorList = colorList;
+            ViewBag.BredName = breedName;
+            return View(colorList);
+
+        }
+
     }
 }

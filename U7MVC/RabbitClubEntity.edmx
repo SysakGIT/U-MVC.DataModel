@@ -175,6 +175,21 @@ warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary 
           <Property Name="Flat" Type="nvarchar" MaxLength="10" />
           <Property Name="PostBox" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_RabbitBreedColorList">
+          <Key>
+            <PropertyRef Name="BreedId" />
+            <PropertyRef Name="ColorId" />
+            <PropertyRef Name="IsSelected" />
+          </Key>
+          <Property Name="BreedId" Type="int" Nullable="false" />
+          <Property Name="BreedName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ColorId" Type="int" Nullable="false" />
+          <Property Name="ColorName" Type="nvarchar" MaxLength="200" />
+          <Property Name="BreedsId" Type="int" />
+          <Property Name="IsSelected" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="fc_City_CityId">
           <End Role="City" Type="Self.City" Multiplicity="1" />
           <End Role="AddressData" Type="Self.AddressData" Multiplicity="*" />
@@ -343,6 +358,11 @@ warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="UpdateRabbitColorrelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BreedId" Type="int" Mode="In" />
+          <Parameter Name="ColorId" Type="int" Mode="In" />
+          <Parameter Name="Value" Type="bit" Mode="In" />
+        </Function>
         <EntityContainer Name="RabbitClubModelStoreContainer">
           <EntitySet Name="AddressData" EntityType="Self.AddressData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Breeds" EntityType="Self.Breeds" Schema="dbo" store:Type="Tables" />
@@ -391,6 +411,16 @@ warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary 
     [v_Members].[Flat] AS [Flat], 
     [v_Members].[PostBox] AS [PostBox]
     FROM [dbo].[v_Members] AS [v_Members]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_RabbitBreedColorList" EntityType="Self.v_RabbitBreedColorList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_RabbitBreedColorList].[BreedId] AS [BreedId], 
+    [v_RabbitBreedColorList].[BreedName] AS [BreedName], 
+    [v_RabbitBreedColorList].[ColorId] AS [ColorId], 
+    [v_RabbitBreedColorList].[ColorName] AS [ColorName], 
+    [v_RabbitBreedColorList].[BreedsId] AS [BreedsId], 
+    [v_RabbitBreedColorList].[IsSelected] AS [IsSelected]
+    FROM [dbo].[v_RabbitBreedColorList] AS [v_RabbitBreedColorList]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="fc_City_CityId" Association="Self.fc_City_CityId">
             <End Role="City" EntitySet="City" />
@@ -836,6 +866,12 @@ warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary 
           <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
           <EntitySet Name="RegionsDistrinctsCities" EntityType="RabbitClubModel.RegionsDistrinctsCities" />
           <EntitySet Name="v_Members" EntityType="RabbitClubModel.v_Members" />
+          <EntitySet Name="v_RabbitBreedColorList" EntityType="RabbitClubModel.v_RabbitBreedColorList" />
+          <FunctionImport Name="UpdateRabbitColorrelation">
+            <Parameter Name="BreedId" Mode="In" Type="Int32" />
+            <Parameter Name="ColorId" Mode="In" Type="Int32" />
+            <Parameter Name="Value" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="RegionsDistrincts">
           <Key>
@@ -887,6 +923,19 @@ warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary 
           <Property Name="House" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Flat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="v_RabbitBreedColorList">
+          <Key>
+            <PropertyRef Name="BreedId" />
+            <PropertyRef Name="ColorId" />
+            <PropertyRef Name="IsSelected" />
+          </Key>
+          <Property Name="BreedId" Type="Int32" Nullable="false" />
+          <Property Name="BreedName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+          <Property Name="ColorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BreedsId" Type="Int32" />
+          <Property Name="IsSelected" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1072,6 +1121,19 @@ warning 6002: The table/view 'RabbitClub.dbo.v_Members' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="v_RabbitBreedColorList">
+            <EntityTypeMapping TypeName="RabbitClubModel.v_RabbitBreedColorList">
+              <MappingFragment StoreEntitySet="v_RabbitBreedColorList">
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="BreedsId" ColumnName="BreedsId" />
+                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="BreedName" ColumnName="BreedName" />
+                <ScalarProperty Name="BreedId" ColumnName="BreedId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateRabbitColorrelation" FunctionName="RabbitClubModel.Store.UpdateRabbitColorrelation" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

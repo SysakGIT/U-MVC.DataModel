@@ -252,3 +252,47 @@ select m.MemberID, m.MemberFirstName, m.MemberLastName, m.MemberNumber
 		inner join District d on m.DistrictId = d.Id
 		inner join City c on m.CityID = c.ID
 go
+
+IF  EXISTS ( SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'v_RabbitBreedColorList' AND TABLE_TYPE = 'VIEW' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+	drop view v_RabbitBreedColorList 
+END
+go
+
+create   view v_RabbitBreedColorList 
+as
+select b.id as BreedId, b.BreedName
+	,c.ID as ColorId, c.ColorName
+	,br.id as BreedsId
+	,case when br.id is null then 0 else 1 end as IsSelected
+	from [dbo].[RabbitBreed] b
+		inner join [dbo].[RabbitColor] c on 1=1
+	left join [dbo].[Breeds] br  on c.ID = br.RabbitColorId and b.id = br.RabbitBreedId
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'UpdateRabbitColorrelation')
+BEGIN
+	DROP PROCEDURE UpdateRabbitColorrelation
+END
+GO
+
+CREATE PROCEDURE UpdateRabbitColorrelation
+@BreedId int
+,@ColorId int
+,@Value bit
+AS
+BEGIN
+	IF @Value = 0
+		DELETE FROM Breeds 
+			WHERE RabbitBreedId = @BreedId AND RabbitColorId = @ColorId
+	ELSE
+	BEGIN
+		UPDATE Breeds
+		SET  RabbitBreedId = @BreedId, RabbitColorId = @ColorId
+		WHERE RabbitBreedId = @BreedId AND RabbitColorId = @ColorId
+
+		IF @@ROWCOUNT = 0
+		INSERT INTO Breeds (RabbitBreedId, RabbitColorId) VALUES(@BreedId, @ColorId)
+	END
+END
+GO

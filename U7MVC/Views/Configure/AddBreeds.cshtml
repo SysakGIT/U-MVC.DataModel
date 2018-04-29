@@ -1,7 +1,7 @@
 ﻿@model RabbitBreed
 
 @{
-    //Layout = null;
+    //Layout = "~/Views/Configure/LeftMenuAdmin.cshtml";
 }
 
 <!DOCTYPE html>
@@ -13,27 +13,43 @@
 </head>
 <body>
     <div> 
+        <p>Порода кролів</p>
+        <p>
+            @Html.ActionLink("Додати нову", "AddNewBreed", "Configure")
+        </p>
         <table>
-            <tr>
-                <td><p>Порода кролів</p></td>
-            </tr>
-
-            <tr>
-                @Html.ActionLink("Додати нову", "AddNewBreed", "Configure")
-            </tr>
-
             @foreach (var b in ViewBag.Breed)
             {
                 <tr>
                     <td>
-                        <label>
-                             @b.BreedName
-                            </label>
-                        </td>
-                    
+                        <a href="/Configure/AddRelateBreedAndColor/@b.ID">@b.BreedName</a>
+                    </td>
+
                 </tr>
             }
         </table>
-    </div>
+</div>
+<div>
+    <p>Окраси кролів</p>
+    <p>
+        @Html.ActionLink("Додати новий", "AddNewColor", "Configure")
+    </p>
+
+    <table>
+        @foreach (var b in ViewBag.Color)
+        {
+            <tr>
+                <td>
+                    <label>
+                        @b.ColorName
+                    </label>
+                </td>
+
+            </tr>
+        }
+    </table>
+
+</div>
+    
 </body>
 </html>
