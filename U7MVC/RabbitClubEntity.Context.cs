@@ -43,8 +43,9 @@ namespace U7MVC
         public virtual DbSet<RegionsDistrincts> RegionsDistrincts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<RegionsDistrinctsCities> RegionsDistrinctsCities { get; set; }
-        public virtual DbSet<v_Members> v_Members { get; set; }
         public virtual DbSet<v_RabbitBreedColorList> v_RabbitBreedColorList { get; set; }
+        public virtual DbSet<v_Members> v_Members { get; set; }
+        public virtual DbSet<News> News { get; set; }
     
         public virtual int UpdateRabbitColorrelation(Nullable<int> breedId, Nullable<int> colorId, Nullable<bool> value)
         {

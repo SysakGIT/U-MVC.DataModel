@@ -296,3 +296,19 @@ BEGIN
 	END
 END
 GO
+
+
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'News' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[News] (
+			[Id] [INT] identity  CONSTRAINT pk__News_ID PRIMARY KEY,
+			[Subject] [NVARCHAR] (200) NOT NULL,
+			[Body] [NVARCHAR] (max) NOT NULL,
+			[Image] [VARBINARY] (MAX),
+			[UserId] int, --- needs to add references
+			[isActive] [BIT] NOT NULL,
+			[CreatedDate] [datetime] NOT NULL DEFAULT GETDATE()
+			
+		)
+	END
+GO

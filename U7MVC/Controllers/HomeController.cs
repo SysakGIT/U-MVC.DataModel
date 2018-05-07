@@ -14,9 +14,33 @@ namespace U7MVC.Controllers
 
         public ActionResult Index()
         {
+            var news = db.News;
+            ViewBag.News = news;
             return View();
         }
+        public ActionResult AddNews()
+        {
+            var news = db.News;
+            ViewBag.News = news;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddNewsSave(News n)
+        {
+            try
+            {
+                db.News.Add(n);
 
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception E)
+            {
+                var a = E.Message;
+                return View();
+            }
+        }
         public ActionResult Member()
         {
             var member = db.v_Members;

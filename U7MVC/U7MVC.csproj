@@ -234,6 +234,9 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\RegionsDistrinct.cs" />
     <Compile Include="Models\Users.cs" />
+    <Compile Include="News.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="PhoneTypes.cs">
       <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
@@ -371,6 +374,7 @@
     <Content Include="Views\Configure\AddNewBreed.cshtml" />
     <Content Include="Views\Configure\AddNewColor.cshtml" />
     <Content Include="Views\Configure\AddRelateBreedAndColor.cshtml" />
+    <Content Include="Views\Home\AddNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

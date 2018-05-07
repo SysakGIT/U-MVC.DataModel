@@ -83,6 +83,18 @@
           <Property Name="PhoneTypeID" Type="int" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="PhoneTypes">
           <Key>
             <PropertyRef Name="ID" />
@@ -372,6 +384,7 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           <EntitySet Name="MemberBreeds" EntityType="Self.MemberBreeds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MembersPhone" EntityType="Self.MembersPhone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneTypes" EntityType="Self.PhoneTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RabbitBreed" EntityType="Self.RabbitBreed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RabbitColor" EntityType="Self.RabbitColor" Schema="dbo" store:Type="Tables" />
@@ -865,13 +878,14 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           <EntitySet Name="RegionsDistrincts" EntityType="RabbitClubModel.RegionsDistrincts" />
           <EntitySet Name="Users" EntityType="RabbitClubModel.Users" />
           <EntitySet Name="RegionsDistrinctsCities" EntityType="RabbitClubModel.RegionsDistrinctsCities" />
-          <EntitySet Name="v_Members" EntityType="RabbitClubModel.v_Members" />
           <EntitySet Name="v_RabbitBreedColorList" EntityType="RabbitClubModel.v_RabbitBreedColorList" />
           <FunctionImport Name="UpdateRabbitColorrelation">
             <Parameter Name="BreedId" Mode="In" Type="Int32" />
             <Parameter Name="ColorId" Mode="In" Type="Int32" />
             <Parameter Name="Value" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="v_Members" EntityType="RabbitClubModel.v_Members" />
+          <EntitySet Name="News" EntityType="RabbitClubModel.News" />
         </EntityContainer>
         <EntityType Name="RegionsDistrincts">
           <Key>
@@ -905,6 +919,19 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="v_RabbitBreedColorList">
+          <Key>
+            <PropertyRef Name="BreedId" />
+            <PropertyRef Name="ColorId" />
+            <PropertyRef Name="IsSelected" />
+          </Key>
+          <Property Name="BreedId" Type="Int32" Nullable="false" />
+          <Property Name="BreedName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+          <Property Name="ColorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BreedsId" Type="Int32" />
+          <Property Name="IsSelected" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="v_Members">
           <Key>
             <PropertyRef Name="MemberID" />
@@ -924,18 +951,17 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           <Property Name="Flat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PostBox" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="v_RabbitBreedColorList">
+        <EntityType Name="News">
           <Key>
-            <PropertyRef Name="BreedId" />
-            <PropertyRef Name="ColorId" />
-            <PropertyRef Name="IsSelected" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="BreedId" Type="Int32" Nullable="false" />
-          <Property Name="BreedName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ColorId" Type="Int32" Nullable="false" />
-          <Property Name="ColorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="BreedsId" Type="Int32" />
-          <Property Name="IsSelected" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1101,6 +1127,19 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="v_RabbitBreedColorList">
+            <EntityTypeMapping TypeName="RabbitClubModel.v_RabbitBreedColorList">
+              <MappingFragment StoreEntitySet="v_RabbitBreedColorList">
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="BreedsId" ColumnName="BreedsId" />
+                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="BreedName" ColumnName="BreedName" />
+                <ScalarProperty Name="BreedId" ColumnName="BreedId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateRabbitColorrelation" FunctionName="RabbitClubModel.Store.UpdateRabbitColorrelation" />
           <EntitySetMapping Name="v_Members">
             <EntityTypeMapping TypeName="RabbitClubModel.v_Members">
               <MappingFragment StoreEntitySet="v_Members">
@@ -1121,19 +1160,19 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="v_RabbitBreedColorList">
-            <EntityTypeMapping TypeName="RabbitClubModel.v_RabbitBreedColorList">
-              <MappingFragment StoreEntitySet="v_RabbitBreedColorList">
-                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
-                <ScalarProperty Name="BreedsId" ColumnName="BreedsId" />
-                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
-                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
-                <ScalarProperty Name="BreedName" ColumnName="BreedName" />
-                <ScalarProperty Name="BreedId" ColumnName="BreedId" />
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="RabbitClubModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="UpdateRabbitColorrelation" FunctionName="RabbitClubModel.Store.UpdateRabbitColorrelation" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
