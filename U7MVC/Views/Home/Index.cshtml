@@ -13,14 +13,28 @@
 <div class="row">
     @foreach (var n in ViewBag.News)
     {
-        <div class="col-md-4">
-            <h2>@n.Subject</h2>
-            <p>
+    <div class="col-md-4">
+        <h2>@n.Subject</h2>
 
-                @Html.Raw(n.Body)
-            </p>
-            @n.CreatedDate
-        </div>
+
+        @if (n.Image != null)
+    {
+
+        var base64 = Convert.ToBase64String(n.Image);
+        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+        <img src='@imgSrc' style="max-width:300px; max-height:300px;" />
+}
+        <p>
+
+            @Html.Raw(n.Body)
+        </p>
+        @n.CreatedDate
+
+        
+        <a href="/Home/DeleteNews/@n.Id">Видалити новину</a>
+
+    </div>
 
     }
 </div>

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 //using U7MVC.Models;
+
 
 namespace U7MVC.Controllers
 {
@@ -25,9 +27,21 @@ namespace U7MVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewsSave(News n)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddNewsSave(  News n)
         {
-            try
+            foreach (string file in Request.Files)
+            {
+                HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                if (hpf.ContentLength == 0)
+                    continue;
+
+                Stream fileStream = Request.Files[file].InputStream;
+                byte[] fileData = new byte[hpf.ContentLength];
+                fileStream.Read(fileData, 0, hpf.ContentLength);
+                n.Image = fileData;
+            }
+                try
             {
                 db.News.Add(n);
 
@@ -41,6 +55,25 @@ namespace U7MVC.Controllers
                 return View();
             }
         }
+        //[HttpPost]
+        public ActionResult DeleteNews(Int32 id)
+        {
+            try
+            {
+                var n = db.News.Where(a => a.Id == id).First();
+                db.News.Remove(n);
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception E)
+            {
+                var a = E.Message;
+                return View();
+            }
+        }
+
         public ActionResult Member()
         {
             var member = db.v_Members;

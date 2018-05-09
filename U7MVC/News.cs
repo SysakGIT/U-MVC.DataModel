@@ -16,6 +16,7 @@ namespace U7MVC
     {
         public int Id { get; set; }
         public string Subject { get; set; }
+        [System.Web.Mvc.AllowHtml]
         public string Body { get; set; }
         public byte[] Image { get; set; }
         public Nullable<int> UserId { get; set; }

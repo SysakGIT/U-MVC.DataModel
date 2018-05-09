@@ -12,7 +12,7 @@
     <title>Додати новину</title>
 </head>
 <body>
-    @using (Html.BeginForm("AddNewsSave", "Home", FormMethod.Post))
+    @using (Html.BeginForm("AddNewsSave", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -40,6 +40,10 @@
         @Html.HiddenFor(model => model.isActive, new { Value = true })
 
         @Html.HiddenFor(model => model.CreatedDate, new { Value = DateTime.Now })
+
+        <input type="file" id="pic" name="pic" accept="image/*">
+       .TextBoxFor(model => model.Image, new { type = "file" })
+        .ValidationMessageFor(model => model.Image)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
