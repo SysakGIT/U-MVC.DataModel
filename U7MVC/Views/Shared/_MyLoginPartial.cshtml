@@ -1,4 +1,13 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 
-@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
-@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+@if (Session["UserName"] == null || Session["UserName"] == "")
+{
+    @Html.ActionLink("Зареєструватися", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+    @Html.ActionLink("Вхід", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+
+}
+else
+{
+    @Html.ActionLink("Вихід (" + Session["UserName"] + ")", "LogOff", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+
+}

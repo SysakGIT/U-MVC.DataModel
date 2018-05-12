@@ -39,25 +39,28 @@
                 @Html.ActionLink("Галерея", "About", "Home")
                 @Html.ActionLink("Contact", "Contact", "Home")
 
-
-                @Html.ActionLink("Адміністрування", "LeftMenuAdmin", "Configure")
+                @if (Session["AdminIsOnline"] == "1")
+                {
+                        @Html.ActionLink("Адміністрування", "LeftMenuAdmin", "Configure")
+                }
+            
                 <!--
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Адміністрування
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        @Html.ActionLink("Члени клубу", "AddMembers", "Configure")
-                        @Html.ActionLink("Метрика кролів", "AddRabits", "Configure")
-                       
-                        <a href="#">Link 3</a>
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            Адміністрування
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            @Html.ActionLink("Члени клубу", "AddMembers", "Configure")
+                            @Html.ActionLink("Метрика кролів", "AddRabits", "Configure")
+
+                            <a href="#">Link 3</a>
+                        </div>
                     </div>
-                </div>
--->
+    -->
 
 
-                @Html.Partial("_MyLoginPartial") 
+                @Html.Partial("_MyLoginPartial")
 
             </div>
         </div>

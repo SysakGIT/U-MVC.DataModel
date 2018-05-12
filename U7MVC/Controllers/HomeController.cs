@@ -28,7 +28,7 @@ namespace U7MVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddNewsSave(  News n)
+        public ActionResult AddNewsSave(News n)
         {
             foreach (string file in Request.Files)
             {

@@ -8,7 +8,10 @@
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-@Html.ActionLink("Додати новину", "AddNews", "Home")
+@if (Session["AdminIsOnline"] == "1")
+{
+    @Html.ActionLink("Додати новину", "AddNews", "Home")
+}
 
 <div class="row">
     @foreach (var n in ViewBag.News)
@@ -31,9 +34,13 @@
         </p>
         @n.CreatedDate
 
-        
-        <a href="/Home/DeleteNews/@n.Id">Видалити новину</a>
 
+       
+
+        @if (Session["AdminIsOnline"] == "1")
+        {
+            <a href="/Home/DeleteNews/@n.Id">Видалити новину</a>
+        }
     </div>
 
     }

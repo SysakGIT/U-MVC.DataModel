@@ -75,27 +75,29 @@ namespace U7MVC.Controllers
         {
             if (GetModelState().IsValid)
             {
-
-                var v = db.Users.Where(x => x.UserEmail.Equals(model.Email)
-                            && x.UserPassword.Equals(model.Password)
-                            && x.isActive.Equals(true)
-                            ).FirstOrDefault();
-                if (v != null)
+                //using (RabbitClubEntitiesConnection db = new RabbitClubEntitiesConnection())
                 {
-                    Session["UserLoginId"] = v.Id;
-                    Session["UserName"] = v.UserName;
-                    if (v.UserName == "Admin") // logged as admin
+                    var v = db.Users.Where(x => x.UserEmail.Equals(model.Email)
+                            && x.UserPassword.Equals(model.Password)
+                            
+                            ).FirstOrDefault();
+                    if (v != null)
                     {
-                        Session["AdminIsOnline"] = "1";
+                        Session["UserLoginId"] = v.Id;
+                        Session["UserName"] = v.UserName;
+                        if (v.UserTypeId == 1) // logged as admin
+                        {
+                            Session["AdminIsOnline"] = "1";
+                        }
+                        return RedirectToAction("Index", "Home");
                     }
-                    return RedirectToAction("AfterLogin");
-                }
 
-                //return View(model);
-                return RedirectToAction("Index");
+                    //return View(model);
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -185,11 +187,32 @@ namespace U7MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                using (RabbitClubEntitiesConnection db = new RabbitClubEntitiesConnection())
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    string mail = model.Email;
+                    var e = db.Users.Where(a => a.UserEmail == mail).FirstOrDefault();
+
+                    Boolean added = false;
+                    if (e == null)
+                    {
+                        var newUser = new Users();
+                        newUser.UserEmail = model.Email;
+                        newUser.UserName = model.Email;
+                        newUser.UserPassword = model.Password;
+                        newUser.UserTypeId = 100; // Defauult as User
+                        newUser.isActive = true;
+
+                        db.Users.Add(newUser);
+                        db.SaveChanges();
+                        added = true;
+                    }
+                
+                
+                //var result = await UserManager.CreateAsync(user, model.Password);
+                if (added)//(result.Succeeded)
+                {
+                   // var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -197,9 +220,10 @@ namespace U7MVC.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
-                AddErrors(result);
+                    //AddErrors(result);
+                }
             }
 
             // If we got this far, something failed, redisplay form
@@ -421,14 +445,20 @@ namespace U7MVC.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // [HttpPost]
+        [AllowAnonymous]
+        
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session["UserLoginId"] = "";
+            Session["UserName"] = "";
+            Session["AdminIsOnline"] = "";
+
+            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
 
+      
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]

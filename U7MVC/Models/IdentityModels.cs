@@ -21,7 +21,7 @@ namespace U7MVC.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("RabbitClubEntitiesConnection", throwIfV1Schema: false)
         {
         }
 
