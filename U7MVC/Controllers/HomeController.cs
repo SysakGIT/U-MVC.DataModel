@@ -43,6 +43,7 @@ namespace U7MVC.Controllers
             }
                 try
             {
+                n.CreatedDate = DateTime.Now;
                 db.News.Add(n);
 
                 db.SaveChanges();

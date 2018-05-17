@@ -39,12 +39,9 @@
         @Html.HiddenFor(model => model.UserId)
         @Html.HiddenFor(model => model.isActive, new { Value = true })
 
-        @Html.HiddenFor(model => model.CreatedDate, new { Value = DateTime.Now })
-
+       
         <input type="file" id="pic" name="pic" accept="image/*">
-       .TextBoxFor(model => model.Image, new { type = "file" })
-        .ValidationMessageFor(model => model.Image)
-
+      
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Додати" class="btn btn-default" />
