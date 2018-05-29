@@ -312,3 +312,18 @@ IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'N
 		)
 	END
 GO
+
+
+IF NOT EXISTS ( SELECT NULL FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Photos' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = 'dbo')
+	BEGIN
+		CREATE TABLE [dbo].[Photos] (
+			[Id] [INT] identity  CONSTRAINT pk__Photos_ID PRIMARY KEY,
+			[Title] [NVARCHAR] (200) NOT NULL,
+			[Image] [VARBINARY] (MAX),
+			[UserId] int, --- needs to add references
+			[isActive] [BIT] NOT NULL,
+			[CreatedDate] [datetime] NOT NULL DEFAULT GETDATE()
+			
+		)
+	END
+GO

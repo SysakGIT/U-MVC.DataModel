@@ -102,6 +102,17 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="PhoneType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Photos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="RabbitBreed">
           <Key>
             <PropertyRef Name="ID" />
@@ -386,6 +397,7 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           <EntitySet Name="MembersPhone" EntityType="Self.MembersPhone" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneTypes" EntityType="Self.PhoneTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photos" EntityType="Self.Photos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RabbitBreed" EntityType="Self.RabbitBreed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RabbitColor" EntityType="Self.RabbitColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
@@ -886,6 +898,7 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           </FunctionImport>
           <EntitySet Name="v_Members" EntityType="RabbitClubModel.v_Members" />
           <EntitySet Name="News" EntityType="RabbitClubModel.News" />
+          <EntitySet Name="Photos" EntityType="RabbitClubModel.Photos" />
         </EntityContainer>
         <EntityType Name="RegionsDistrincts">
           <Key>
@@ -958,6 +971,17 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Subject" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Photos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
@@ -1169,6 +1193,18 @@ warning 6002: The table/view 'RabbitClub.dbo.v_RabbitBreedColorList' does not ha
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photos">
+            <EntityTypeMapping TypeName="RabbitClubModel.Photos">
+              <MappingFragment StoreEntitySet="Photos">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

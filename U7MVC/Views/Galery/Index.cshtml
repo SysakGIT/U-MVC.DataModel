@@ -1,0 +1,76 @@
+﻿
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial;
+    }
+
+    .img_row {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 4px;
+    }
+
+    /* Create two equal columns that sits next to each other */
+    .img_column {
+        flex: 50%;
+        padding: 0 4px;
+    }
+
+        .img_column img {
+            margin-top: 8px;
+            vertical-align: middle;
+            max-width: 100%;
+        }
+</style>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Галерея</title>
+
+</head>
+
+
+    @if (Session["AdminIsOnline"] == "1")
+    {
+        @Html.ActionLink("Додати фотографію", "AddPhoto", "Galery")
+    }
+    <div class="img_row">
+        @foreach (var n in ViewBag.Photos)
+        {
+            <div class="img_column">
+                <p>@n.Title</p>
+
+
+                @if (n.Image != null)
+                {
+
+                    var base64 = Convert.ToBase64String(n.Image);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                    <img src='@imgSrc' title='@n.CreatedDate' />
+                }
+                
+                
+
+
+                @if (Session["AdminIsOnline"] == "1")
+                {
+                    <a href="/Home/DeleteNews/@n.Id">Видалити фотографію</a>
+                }
+            </div>
+
+        }
+    </div>
+
+</html>

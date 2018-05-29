@@ -205,6 +205,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConfigureController.cs" />
+    <Compile Include="Controllers\GaleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="District.cs">
@@ -238,6 +239,9 @@
       <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="PhoneTypes.cs">
+      <DependentUpon>RabbitClubEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Photos.cs">
       <DependentUpon>RabbitClubEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -288,6 +292,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ImagesStyle.css" />
     <Content Include="Content\MyStyleSheet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -375,6 +380,8 @@
     <Content Include="Views\Configure\AddNewColor.cshtml" />
     <Content Include="Views\Configure\AddRelateBreedAndColor.cshtml" />
     <Content Include="Views\Home\AddNews.cshtml" />
+    <Content Include="Views\Galery\Index.cshtml" />
+    <Content Include="Views\Galery\AddPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
