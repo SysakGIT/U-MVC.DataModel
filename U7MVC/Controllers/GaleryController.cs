@@ -55,5 +55,23 @@ namespace U7MVC.Controllers
                 return View();
             }
         }
+
+        public ActionResult DeletePhoto(Int32 id)
+        {
+            try
+            {
+                var n = db.Photos.Where(a => a.Id == id).First();
+                db.Photos.Remove(n);
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception E)
+            {
+                var a = E.Message;
+                return View();
+            }
+        }
     }
 }
