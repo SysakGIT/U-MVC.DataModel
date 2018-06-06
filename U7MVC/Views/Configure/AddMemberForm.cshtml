@@ -68,134 +68,109 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 
-                <table>
-
-                    
-
+                <table border="0">
                     <tr>
-                        <div class="form-group">
-
+                        <td>
                             Номер в клубі
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.MemberNumber, new { @class = "form-control", maxlength = "5" })
-
-                            </div>
-                        </div>
-                    </tr>
-
-                    <tr>
-                        <div class="form-group">
+                            <br />
+                            @Html.TextBoxFor(m => m.MemberNumber, new { @class = "form-control", maxlength = "5" })
+                        </td>
+                        <td>
                             Прізвище
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.MemberLastName, new { @class = "form-control", type = "text" })
-
-                            </div>
-                        </div>
-                    </tr>
-
-                    <tr>
-                        <div class="form-group">
+                            <br />
+                            @Html.TextBoxFor(m => m.MemberLastName, new { @class = "form-control", type = "text" })
+                        </td>
+                        <td>
                             Ім'я
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.MemberFirstName, new { @class = "form-control", type = "text" })
+                            <br />
+                            @Html.TextBoxFor(m => m.MemberFirstName, new { @class = "form-control", type = "text" })
+                        </td>
 
-                            </div>
-                        </div>
                     </tr>
 
-                    <div class="row">
-
-                        <div class="form-group">
-                            Область
-                            <div class="col-md-10">
-
-                                <select id="RegionId" name="RegionId" onchange="getDistrictList();getCityList()">
-
-                                    @foreach (var b in ViewBag.Reg)
-                                    {
-                                        <option value="@b.ID">
-                                            @b.RegionName
-                                        </option>
-
-                                    }
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            Район
-                            <div class="col-md-10">
-                                <select id="DistrictId" name="DistrictId" onchange="getCityList()">
-                                    @foreach (var b in ViewBag.District)
-                                    {
-                                        <option value="@b.DistrictId">
-                                            @b.DistrictName
-                                        </option>
-
-                                    }
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            Село/Місто
-                            <div class="col-md-10">
-                                <select id="CityId" name="CityId">
-                                    @foreach (var b in ViewBag.lstCity)
-                                    {
-                                        <option value="@b.CityId">
-                                            @b.CityName
-                                        </option>
-
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        Вулиця
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", type = "text" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        Дім
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.House, new { @class = "form-control", maxlength = "4" })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        Квартира
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Flat, new { @class = "form-control", maxlength = "3" })
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="form-group">
-                        Телефон Київстар
-                        <div class="col-md-10">
-                            <select id="mySelect">
-                                <option>+38 067</option>
-                                <option>+38 068</option>
-                                <option>+38 096</option>
-                                <option>+38 097</option>
-                                <option>+38 098</option>
-                            </select>
-                            @Html.TextBoxFor(m => m.MemberNumber, new { @class = "form-control", maxlength = "7" })
-                        </div>
-                    </div>
-                    
                     <tr>
-                        <div class="form-group">
+                        <td>
+                            Область
+                            <br />
+                            <select id="RegionId" name="RegionId" onchange="getDistrictList();getCityList()">
+
+                                @foreach (var b in ViewBag.Reg)
+                {
+                    <option value="@b.ID">
+                        @b.RegionName
+                    </option>
+}
+
+                            </select>
+                        </td>
+                        <td>
+                            Район
+                            <br />
+
+                            <select id="DistrictId" name="DistrictId" onchange="getCityList()">
+                                @foreach (var b in ViewBag.District)
+                {
+                    <option value="@b.DistrictId">
+                        @b.DistrictName
+                    </option>
+
+}
+                            </select>
+                        </td>
+                        <td>
+                            Село/Місто
+                            <br />
+
+                            <select id="CityId" name="CityId">
+                                @foreach (var b in ViewBag.lstCity)
+                {
+                    <option value="@b.CityId">
+                        @b.CityName
+                    </option>
+
+}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Вулиця
+                            <br />
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", type = "text" })
+                        </td>
+
+
+                        <td>
+                            Дім
+                            <br />
+                            @Html.TextBoxFor(m => m.House, new { @class = "form-control", maxlength = "4" })
+                        </td>
+
+                        <td>
+                            Квартира
+                            <br />
+                            @Html.TextBoxFor(m => m.Flat, new { @class = "form-control", maxlength = "3" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Телефон Київстар
+                            <br />
+                                <select id="mySelect">
+                                    <option>+38 067</option>
+                                    <option>+38 068</option>
+                                    <option>+38 096</option>
+                                    <option>+38 097</option>
+                                    <option>+38 098</option>
+                                </select>
+                                @Html.TextBoxFor(m => m.MemberNumber, new { @class = "form-control", maxlength = "7" })
+                        </td>
+
+
+
+                        <td>
                             Телефон Vodafon
-                            <div class="col-md-10">
+                            <br />
                                 <select id="mySelect">
                                     <option>+38 050</option>
                                     <option>+38 066</option>
@@ -203,16 +178,14 @@
                                     <option>+38 099</option>
                                 </select>
                                 @Html.TextBoxFor(m => m.MemberNumber, new { @class = "form-control", maxlength = "7" })
-                            </div>
-                        </div>
+                        </td>
                     </tr>
 
-                  
                 </table>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-default" />
+                            <input type="submit" value="Додати" class="btn btn-default" />
                         </div>
                     </div>
 
